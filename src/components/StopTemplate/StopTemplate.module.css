@@ -1,0 +1,36 @@
+.stop {
+	display: flex;
+	height: 92px;
+	align-items: center;
+}
+
+.timeContainer {
+	text-align: center;
+	color: rgba(64, 57, 57, 1);
+	font-size: 40px;
+	font-weight: 500;
+	line-height: 32px;
+}
+
+.minute {
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 18px;
+}
+
+.circle {
+	margin: 0 35px 0 22.5px;
+}
+
+.name {
+	font-size: 32px;
+	font-weight: 500;
+	line-height: 32px;
+}
+
+.name_en {
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 24px;
+	margin-top: 4px;
+}

@@ -1,0 +1,40 @@
+.row {
+	border-bottom: 1px solid rgba(217, 217, 217, 1);
+	font-size: 26px;
+	line-height: 26px;
+}
+
+.row td {
+	padding: 0;
+	height: 64px;
+}
+
+.textBold {
+	font-weight: 700;
+	text-align: center;
+}
+
+.route {
+	background: rgba(182, 229, 255, 1);
+	margin: 13px 8px;
+	text-align: center;
+	width: 104;
+	color: rgba(0, 0, 0, 1);
+	line-height: 38px;
+}
+
+.direction {
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 30px;
+}
+
+.company {
+	font-weight: 500;
+}
+
+.status {
+	font-size: 22px;
+	font-weight: 500;
+	line-height: 22px;
+}

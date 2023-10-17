@@ -1,0 +1,18 @@
+.header {
+	background-color: rgba(182, 229, 255, 1);
+	padding: 10px 32px;
+	box-sizing: border-box;
+	height: 102px;  /* delete later*/
+}
+
+.title {
+	font-size: 40px;
+	font-weight: 700;
+	line-height: 40px;
+}
+
+.titleEng {
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 42px;
+}
