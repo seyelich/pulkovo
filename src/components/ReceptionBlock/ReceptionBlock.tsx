@@ -14,7 +14,7 @@ export const ReceptionBlock = ({ nums } : { nums: string[] }) => {
 			{
 				nums
 					.map((el, i) => 
-						<div className={styles.nums}>
+						<div className={styles.nums} key={i} >
 							<p className={styles.num}>{el}</p>
 							<img src={smallLine} />
 							<p className={styles.num}>{nums[i+1]}</p>

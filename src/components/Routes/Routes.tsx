@@ -25,7 +25,7 @@ export const Routes = ({ stop }: { stop: TStop }) => {
 				<img src={icon} alt={type} />
 				<ul className={`${styles.list} ${type === 'Metro' && styles.listMetro}`}>
 					{
-						arr.map((el: string) => <li><img src={el} alt='Номер маршрута' /></li>)
+						arr.map((el: string, i) => <li key={i}><img src={el} alt='Номер маршрута' /></li>)
 					}
 				</ul>
 				{

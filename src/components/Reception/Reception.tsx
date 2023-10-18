@@ -18,7 +18,7 @@ export const Reception = () => {
 			</div>
 			<div className={styles.content}>
 				{
-					nums.map(arr => <ReceptionBlock nums={arr} />)
+					nums.map((arr, i) => <ReceptionBlock key={i} nums={arr} />)
 				}
 			</div>
 			<div className={styles.enterContainer}>
