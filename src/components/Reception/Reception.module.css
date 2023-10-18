@@ -3,6 +3,14 @@
 	padding: 8px 32px 29px 31px;
 }
 
+.content {
+	display: flex;
+	margin: 38px 0 45px 0;
+	align-items: center;
+	gap: 56px;
+	align-items: center;
+}
+
 .floor {
 	font-size: 28px;
 	font-weight: 700;

@@ -1,10 +1,10 @@
 import busIcon from '../../assets/icon_Bus.png'
 import trolleyIcon from '../../assets/icon_Trolley.png'
 import metroIcon from '../../assets/icon_Metro.svg'
-import { icons } from '../../utils/data'
+import { TStop, icons } from '../../utils/data'
 import styles from './Routes.module.css'
 
-export const Routes = () => {
+export const Routes = ({ stop }: { stop: TStop }) => {
 	const setIcons = (arr: string[], type: 'Bus' | 'Trolley' | 'Metro') => {
 		let icon = '';
 
@@ -41,7 +41,10 @@ export const Routes = () => {
 	
 	return (
 		<div className={styles.container}>
-			<p className={styles.finalStop}>Конечная</p>
+			{
+				stop.isLast &&
+				<p className={styles.finalStop}>Конечная</p>
+			}
 			{ setIcons(icons.slice(0, 12), 'Bus') }
 			{ setIcons(icons.slice(12, 14), 'Trolley') }
 			{ setIcons(icons.slice(14, 16), 'Metro') }
