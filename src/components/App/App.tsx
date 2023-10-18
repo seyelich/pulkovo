@@ -12,8 +12,8 @@ function App() {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			stage < 2 && setStage(stage => stage+1);
-			stage === 2 && setStage(0);
+			stage < 3 && setStage(stage => stage+1);
+			stage === 3 && setStage(0);
 		}, 10000);
 		return () => clearInterval(interval)
 	}, [stage]);
@@ -25,6 +25,8 @@ function App() {
 			case 1:
 				return <FlightTable flights={flightsToArrive} type='arrival'/>
 			case 2:
+				return <FlightTable flights={flightsToArrive} type='departure'/>
+			case 3:
 				return <Reception />
 			default:
 				break;

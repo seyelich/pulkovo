@@ -1,12 +1,13 @@
 .content {
 	border-left: 2px solid rgba(51, 71, 67, 1);
+	overflow: hidden;
 }
 
 .titleContainer {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	margin-bottom: 5px;
+	padding-left: 13px;
 }
 
 .title {
@@ -19,18 +20,20 @@
 .table {
 	border-collapse: collapse;
 	color: rgba(0, 25, 20, 1);
+	margin-top: -18px;
 }
 
 .header {
 	border-bottom: 2px solid rgba(51, 71, 67, 1);
 	font-size: 20px;
-	font-weight: 500;
 	line-height: 20px;
 	color: rgba(51, 71, 67, 1);
 }
 
-.headerRow {
-	height: 39px;
+.headerRow th {
+	font-weight: 500;
+	padding-bottom: 14px;
+	vertical-align: bottom;
 }
 
 .time {
@@ -50,9 +53,9 @@
 }
 
 .plane {
-	width: 100px
+	width: 100px;
 }
 
 .status {
-	width: 180px
+	width: 180px;
 }

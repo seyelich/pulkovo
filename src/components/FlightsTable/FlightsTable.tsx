@@ -29,7 +29,7 @@ export const FlightTable = ({ flights, type }: { flights: TFlight[], type: 'arri
 					</thead>
 					<tbody>
 						{
-							flights.map(el => <FlightLine flight={el} />)
+							flights.map((el, i) => <FlightLine flight={el} key={i} />)
 						}
 					</tbody>
 			</table>

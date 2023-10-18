@@ -38,3 +38,11 @@
 	font-weight: 500;
 	line-height: 22px;
 }
+
+.statusRed {
+	background-color: #FFCBCB;
+}
+
+.statusGreen {
+	background-color: #C9FFD5;
+}
