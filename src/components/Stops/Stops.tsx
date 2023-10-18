@@ -17,28 +17,28 @@ export const Stops = ({ isGoing }: { isGoing: boolean}) => {
 		return () => clearInterval(interval);
 	}, [index]);
 
-	// const lineHeight = !isGoing ? 
-	// 	index === 0 ? 436 : 404 - 116*(index+1) : 
-	// 	476 - 108*index //exchange hardcored values with heights of blocks
-	const height = index === 0 ? 436 : 404 - 116*(index+1);
-	const lineHeight = height < 0 ? 0 : height;
+	const lineHeight= () => {
+		const height = index === 0 ? 436 : 404 - 116*(index+1);
+		const heightOnGoing = index === 0 ? 476 : 400 - 108*index;
+
+		if(isGoing) return heightOnGoing > 0 ? heightOnGoing : 0;
+		else return height > 0 ? height : 0;
+	}
 	
 	return (
 		<div className={styles.leftBlock}>
 			<Header el={index === stops.length ? stops[index-1] : stops[index]} isGoing={isGoing} />
 			{
-				// isGoing ?
-				
 				<>
 					{
 						index === stops.length ? 
 						<Routes stop={index === stops.length ? stops[index-1] : stops[index]} /> :
 						<ul className={styles.stops}>
-							<svg className={styles.line} width="2" height={lineHeight} viewBox={`0 0 2 ${lineHeight}` }fill="none" xmlns="http://www.w3.org/2000/svg">
-								<rect width="2" height={lineHeight} fill="#D9D9D9"/>
+							<svg className={styles.line} width="2" height={lineHeight()} viewBox={`0 0 2 ${lineHeight()}` }fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect width="2" height={lineHeight()} fill="#D9D9D9"/>
 							</svg>
 							{
-								index === stops.length-1 ? 
+								index === stops.length-1 && !isGoing ? 
 								<p className={styles.lastStop}>Конечная</p> :
 								stops
 									.slice(isGoing ? index : index+1)
