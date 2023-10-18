@@ -1,0 +1,55 @@
+.container {
+	border-left: 2px solid rgba(217, 217, 217, 1);
+	padding: 8px 32px 29px 31px;
+}
+
+.floor {
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 42px;
+	color: rgba(64, 57, 57, 1);
+	border-bottom: 2px solid rgba(217, 217, 217, 1);
+	margin-bottom: 16px;
+}
+
+.titleContainer {
+	background-color: rgba(182, 229, 255, 1);
+	padding: 10px 32px;
+	box-sizing: border-box;
+}
+
+.title {
+	font-size: 40px;
+	font-weight: 700;
+	line-height: 40px;
+}
+
+.titleEng {
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 42px;
+}
+
+.enter {
+	display: flex;
+	gap: 8px;
+}
+
+.par {
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 32px;
+}
+
+.parEng {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 30px;
+}
+
+.enterContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 40px;
+}

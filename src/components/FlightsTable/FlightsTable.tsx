@@ -6,7 +6,7 @@ import styles from './FlightsTable.module.css'
 
 export const FlightTable = ({ flights, type }: { flights: TFlight[], type: 'arrival' | 'departure'}) => {
 	return (
-		<>
+		<div className={styles.content}>
 				<div className={styles.titleContainer}>
 					<img
 						src={type === 'arrival' ? arrival : departure}
@@ -33,6 +33,6 @@ export const FlightTable = ({ flights, type }: { flights: TFlight[], type: 'arri
 						}
 					</tbody>
 			</table>
-		</>
+		</div>
 	)
 }

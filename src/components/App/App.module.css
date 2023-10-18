@@ -5,35 +5,3 @@
 	display: grid;
 	grid-template-columns: repeat(2, 960px);
 }
-
-.leftBlock {
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-}
-
-.stops {
-	position: relative;
-	list-style-type: none;
-	margin: 0;
-	padding: 24px 17.5px 18px 17.5px;
-	display: flex;
-	flex-direction: column;
-	gap: 24px;
-}
-
-.line {
-	position: absolute;
-	left: 97px;
-	top: 0;
-	z-index: -1;
-}
-
-.shadow {
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-	height: 72px;
-	display: flex;
-}
-
-.rightBlock {
-	border-left: 2px solid rgba(51, 71, 67, 1);
-}
