@@ -1,0 +1,32 @@
+.header {
+	background-color: rgba(182, 229, 255, 1);
+	padding: 10px 32px;
+	box-sizing: border-box;
+}
+
+.headerOnGoing {
+	padding: 7px 10px;
+	border-bottom: 2px solid #D9D9D9;
+	display: flex;
+	gap: 16px;
+	box-sizing: border-box;
+}
+
+.title {
+	font-size: 40px;
+	font-weight: 700;
+	line-height: 40px;
+}
+
+.titleOnGoing {
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 42px;
+	color: #403939;
+}
+
+.titleEng {
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 42px;
+}

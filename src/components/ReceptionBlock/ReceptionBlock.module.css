@@ -1,0 +1,36 @@
+.block {
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+	align-items: center;
+}
+
+.num {
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 38px;
+}
+
+.nums {
+	text-align: center;
+	width: 64px;
+	background-color: #B6E5FF;
+}
+
+.arrows {
+	display: flex;
+	flex-direction: column;
+	width: min-content;
+	background-color: white;
+	gap: 17px;
+	grid-row: 1 / 4;
+}
+
+.arrowsRight {
+	rotate: 180deg;
+	grid-column: 5 / 6;
+}
+
+.centralLine {
+	grid-row: 1 / 2;
+	grid-column: 3 / 4;
+}

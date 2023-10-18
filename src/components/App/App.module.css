@@ -1,0 +1,8 @@
+.app {
+  width: 1920px;
+	height: 540px;
+  margin: 0 auto;
+	display: grid;
+	grid-template-columns: repeat(2, 960px);
+	overflow: hidden;
+}
