@@ -1,21 +1,15 @@
-import { stops } from "../../utils/data"
+import { TData } from "../App/App"
 import { Footer } from "../Footer/Footer"
 import { Header } from "../Header/Header"
 import { Routes } from "../Routes/Routes"
 import { StopTemplate } from "../StopTemplate/StopTemplate"
 import styles from './Stops.module.css'
-import { useState, useEffect } from 'react'
 
-export const Stops = ({ isGoing }: { isGoing: boolean}) => {
-	const [index, setIndex] = useState(0);
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			index < stops.length && setIndex(index => index+1);
-			index === stops.length && setIndex(0);
-		}, 3000);
-		return () => clearInterval(interval);
-	}, [index]);
+export const Stops = ({ data }: { data: TData}) => {
+	const isGoing = data.speed !== 0;
+	const stops = data.stops;
+	const currStop = stops.find(el => el.time);
+	const index = stops.length > 4 ? 0 : stops.length;
 
 	const lineHeight= () => {
 		const height = index === 0 ? 436 : 404 - 116*(index+1);
@@ -27,7 +21,7 @@ export const Stops = ({ isGoing }: { isGoing: boolean}) => {
 	
 	return (
 		<div className={styles.leftBlock}>
-			<Header el={index === stops.length ? stops[index-1] : stops[index]} isGoing={isGoing} />
+			{/* <Header el={isGoing ? currStop : } isGoing={isGoing} /> */}
 			{
 				<>
 					{
@@ -41,7 +35,7 @@ export const Stops = ({ isGoing }: { isGoing: boolean}) => {
 								index === stops.length-1 && !isGoing ? 
 								<p className={styles.lastStop}>Конечная</p> :
 								stops
-									.slice(isGoing ? index : index+1)
+									.slice(0, 4)
 									.map((el, i) => <StopTemplate key={i} stop={el} isGoing={i === 0  && isGoing} />)
 							}
 						</ul>
@@ -49,7 +43,7 @@ export const Stops = ({ isGoing }: { isGoing: boolean}) => {
 				</>
 			}
 			<div className={styles.shadow}>
-				<Footer />
+				<Footer data={data} />
 			</div>
 		</div>
 	)

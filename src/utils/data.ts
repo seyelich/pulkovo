@@ -15,13 +15,6 @@ import route_13 from '../assets/routesIcons/number_Route_13.png'
 import station  from '../assets/routesIcons/icon_Metro-Station.png'
 import station_1  from '../assets/routesIcons/icon_Metro-Station_1.png'
 
-export type TStop = {
-	name: string;
-	name_en: string;
-	time: number;
-	isLast: boolean;
-}
-
 export type TFlight = {
 	time: string;
 	number_roure: string;
@@ -147,34 +140,6 @@ export const flightsToFly = [
 		plane_type: 'A320',
 		status: 'Регистрация 14-88',
 	},
-]
-
-export const stops: TStop[] = [
-	{
-		name: 'Бульвар Рокоссовского',
-		name_en: 'Bulvar Rokossovskogo',
-		time: 0,
-		isLast: false,
-	},
-	{
-		name: 'Вагонеточное депо имени мёдоеда',
-		name_en: 'Trolley depot named honeyeater',
-		time: 2,
-		isLast: false,
-	},
-	{
-		name: 'ЦУМ',
-		name_en: 'TSUM',
-		time: 8,
-		isLast: false,
-	},
-	{
-		name: 'Старопоскребышная имени Котофея',
-		name_en: `Cotophey's Old Scrappy`,
-		time: 15,
-		isLast: true,
-	},
-
 ]
 
 export const icons = [

@@ -1,7 +1,7 @@
-import { TStop } from "../../utils/data"
+import { TFullStop } from '../../types'
 import styles from './StopTemplate.module.css'
 
-export const StopTemplate = ({ stop, isGoing } : { stop: TStop, isGoing: boolean }) => {
+export const StopTemplate = ({ stop, isGoing } : { stop:  (TFullStop & { time: number }), isGoing: boolean }) => {
 	return (
 		<li className={styles.stop}>
 			<div className={styles.timeContainer}>
@@ -12,11 +12,11 @@ export const StopTemplate = ({ stop, isGoing } : { stop: TStop, isGoing: boolean
 				<circle cx="14" cy="14" r="12" fill="#B6E5FF" stroke="white" strokeWidth="4"/>
 			</svg>
 			<div className={isGoing ? styles.textOnGoing : undefined}>
-				<p className={`${styles.name} ${isGoing && styles.nameOnGoing}`}>{stop.name}</p>
-				<p className={styles.name_en}>{stop.name_en}</p>
-				{
-					stop.isLast && <p className={styles.lastStop}>Конечная</p>
-				}
+				<p className={`${styles.name} ${isGoing && styles.nameOnGoing}`}>{stop.nameRus}</p>
+				<p className={styles.name_en}>{stop.nameEng}</p>
+				{/* {
+					isLast && <p className={styles.lastStop}>Конечная</p>
+				} */}
 			</div>
 		</li>
 	)

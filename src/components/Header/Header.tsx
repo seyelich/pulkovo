@@ -1,8 +1,8 @@
 import styles from './Header.module.css'
-import { TStop } from '../../utils/data'
 import route from '../../assets/routesIcons/number_Route.png'
+import { TFullStop } from '../../types'
 
-export const Header = ({ el, isGoing }: {el: TStop, isGoing: boolean}) => {
+export const Header = ({ el, isGoing }: {el: (TFullStop & { time: number }), isGoing: boolean}) => {
 	return (
 		isGoing ?
 		<div className={styles.headerOnGoing}>
@@ -11,10 +11,10 @@ export const Header = ({ el, isGoing }: {el: TStop, isGoing: boolean}) => {
 		</div> :
 		<div className={styles.header}>
 			<h1 className={styles.title}>
-				{el.name}
+				{el.nameRus}
 			</h1>
 			<p className={styles.titleEng}>
-				{el.name_en}
+				{el.nameEng}
 			</p>
 		</div>
 	)

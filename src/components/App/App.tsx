@@ -5,18 +5,85 @@ import { FlightTable } from '../FlightsTable/FlightsTable';
 import { useEffect, useState } from 'react';
 import { Stops } from '../Stops/Stops';
 import { Reception } from '../Reception/Reception';
+import useWebSocket from 'react-use-websocket';
+import { TFullStop, TRoute, TStop, TWsMessage } from '../../types';
+
+export type TData = {
+	speed: number,
+	stops: (TFullStop & { time: number })[],
+}
 
 function App() {
 	const [stage, setStage] = useState(0);
-	const [isGoing, setIsGoing] = useState(false);
+	const [socketUrl] = useState(`ws://192.168.100.194:23245`);
+	const [route, setRoute] = useState<TRoute>({
+		icon: '',
+		color: '',
+		fontColor: '',
+		stops: []
+	});
+	const [data, setData] = useState<TData>({
+		speed: 0,
+		stops: [],
+	});
+  const { lastJsonMessage, getWebSocket} = useWebSocket<TWsMessage>(socketUrl, {
+		onError: (err) => { console.log(err) },
+		onClose: () => { console.log("Connection closed")},
+		onOpen: () => { console.log("Connection opened")},
+	});
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			stage < 3 && setStage(stage => stage+1);
-			stage === 3 && setStage(0);
-		}, 10000);
-		return () => clearInterval(interval)
-	}, [stage]);
+  useEffect(() => {
+		if(!lastJsonMessage) return;
+		switch (lastJsonMessage.type) {
+			case "ROUTE":
+				setRoute(lastJsonMessage)
+			case "SPEED":
+				setData({ ...data, speed: lastJsonMessage.speed })
+				break;
+			case "STOP_END":
+
+				break;
+			case "STOP_TIMES": {
+				const stops = [];
+
+				for(const el of lastJsonMessage.stops) {
+					const stop = route!.stops.find((_, i) => i === el.index);
+					if(stop === undefined) return;
+					else stops.push({
+						time: el.time,
+						...stop,
+					})
+				}
+
+				lastJsonMessage.stops.map((el, index) => {
+					const stop = route!.stops.find((_, i) => i === index);
+					if(stop === undefined) return;
+					else return {
+						time: el.time,
+						...stop,
+					}
+				})
+
+				console.log(stops)
+				
+				setData({
+					...data,
+					stops: stops
+				})
+			}
+				
+				break;
+		}
+		// return () => { getWebSocket()?.close() };
+  }, [lastJsonMessage]);
+
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		stage < 3 && setStage(stage => stage+1);
+	// 		stage === 3 && setStage(0);
+	// 	}, 10000);
+	// 	return () => clearInterval(interval)
+	// }, [stage]);
 
 	const setRightBlock = () => {
 		switch (stage) {
@@ -33,26 +100,16 @@ function App() {
 		}
 	}
 
-	const handleClick = () => {
-		setIsGoing(isGoing => !isGoing);
-	}
-
   return (
 		<>
 			<div>
 				<div className={styles.app}>
-					<Stops isGoing={isGoing} />
+					<Stops data={data} />
 					{
 						setRightBlock()
 					}
 				</div>
 			</div>
-			<button onClick={handleClick} type='button'>
-				{
-					isGoing ? 'Остановиться' : 
-					'Ехать'
-				}
-			</button>
 		</>
   )
 }
