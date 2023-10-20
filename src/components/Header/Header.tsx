@@ -1,13 +1,21 @@
 import styles from './Header.module.css'
-import route from '../../assets/routesIcons/number_Route.png'
 import { TFullStop } from '../../types'
 
-export const Header = ({ el, isGoing }: {el: (TFullStop & { time: number }), isGoing: boolean}) => {
+type TRoute = {
+	icon: string;
+	color: string;
+	fontColor: string;
+	name: string;
+}
+
+const isRoute = (o: object): o is TRoute => true;
+
+export const Header = ({ el }: {el: TFullStop | TRoute }) => {
 	return (
-		isGoing ?
-		<div className={styles.headerOnGoing}>
-			<img src={route} alt='route' />
-			<p className={styles.titleOnGoing}>Новособорная — ул. Новая Дорога</p>
+		isRoute(el) ?
+		<div className={styles.headerOnGoing} style={{backgroundColor: el.color}}>
+			<img src={el.icon} alt='route' />
+			<p className={styles.titleOnGoing}>{el.name}</p>
 		</div> :
 		<div className={styles.header}>
 			<h1 className={styles.title}>

@@ -1,32 +1,33 @@
 import styles from './App.module.css'
-import city from '../../assets/Pic.png';
-import { flightsToArrive } from '../../utils/data';
-import { FlightTable } from '../FlightsTable/FlightsTable';
 import { useEffect, useState } from 'react';
 import { Stops } from '../Stops/Stops';
-import { Reception } from '../Reception/Reception';
 import useWebSocket from 'react-use-websocket';
-import { TFullStop, TRoute, TStop, TWsMessage } from '../../types';
+import { TFullStop, TRoute, TSpeed, TStopStart, TStopTimes, TWsMessage } from '../../types';
+import { RouteContext, TRouteContext } from '../../utils/store';
+import { RightBlock } from '../RightBlock/RightBlock';
 
-export type TData = {
-	speed: number,
-	stops: (TFullStop & { time: number })[],
-}
+const {
+	VITE_ICONS_URL,
+	VITE_WS_ID,
+} = import.meta.env;
+
 
 function App() {
-	const [stage, setStage] = useState(0);
-	const [socketUrl] = useState(`ws://192.168.100.194:23245`);
-	const [route, setRoute] = useState<TRoute>({
-		icon: '',
-		color: '',
-		fontColor: '',
-		stops: []
-	});
-	const [data, setData] = useState<TData>({
+	const socketUrl = `ws://${VITE_WS_ID}`;
+	const [allStops, setAllStops] = useState<TFullStop[]>([]);
+	const [data, setData] = useState<TRouteContext>({
+		route: {
+			icon: '',
+			color: '',
+			fontColor: '',
+			name: '',
+		},
 		speed: 0,
+		currStop: undefined,
 		stops: [],
 	});
-  const { lastJsonMessage, getWebSocket} = useWebSocket<TWsMessage>(socketUrl, {
+
+  const { lastJsonMessage } = useWebSocket<TWsMessage>(socketUrl, {
 		onError: (err) => { console.log(err) },
 		onClose: () => { console.log("Connection closed")},
 		onOpen: () => { console.log("Connection opened")},
@@ -34,80 +35,59 @@ function App() {
 
   useEffect(() => {
 		if(!lastJsonMessage) return;
+		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute;
+		const { index } = lastJsonMessage as TStopStart;
+		const { speed } = lastJsonMessage as TSpeed;
+		const currStop = stops?.find(el => el.index === index);
+
 		switch (lastJsonMessage.type) {
 			case "ROUTE":
-				setRoute(lastJsonMessage)
-			case "SPEED":
-				setData({ ...data, speed: lastJsonMessage.speed })
+				setAllStops(stops);
+				setData({ 
+					...data, 
+					route: {
+						icon: VITE_ICONS_URL + '/' + icon,
+						color,
+						fontColor,
+						name: stops[0].nameRus + ' - ' + stops[stops.length-1].nameRus
+					}
+				})
 				break;
-			case "STOP_END":
-
+			case "SPEED":
+				setData({ ...data, speed: speed })
+				break;
+			case "STOP_BEGIN":
+				setData({ ...data, currStop })
 				break;
 			case "STOP_TIMES": {
 				const stops = [];
 
-				for(const el of lastJsonMessage.stops) {
-					const stop = route!.stops.find((_, i) => i === el.index);
+				for(const el of (lastJsonMessage as TStopTimes).stops) {
+					const stop = allStops.find((_, i) => i === el.index);
 					if(stop === undefined) return;
 					else stops.push({
 						time: el.time,
 						...stop,
 					})
 				}
-
-				lastJsonMessage.stops.map((el, index) => {
-					const stop = route!.stops.find((_, i) => i === index);
-					if(stop === undefined) return;
-					else return {
-						time: el.time,
-						...stop,
-					}
-				})
-
-				console.log(stops)
 				
 				setData({
 					...data,
 					stops: stops
 				})
 			}
-				
 				break;
 		}
-		// return () => { getWebSocket()?.close() };
   }, [lastJsonMessage]);
-
-	// useEffect(() => {
-	// 	const interval = setInterval(() => {
-	// 		stage < 3 && setStage(stage => stage+1);
-	// 		stage === 3 && setStage(0);
-	// 	}, 10000);
-	// 	return () => clearInterval(interval)
-	// }, [stage]);
-
-	const setRightBlock = () => {
-		switch (stage) {
-			case 0:
-				return <img src={city} alt='Москва' />
-			case 1:
-				return <FlightTable flights={flightsToArrive} type='arrival'/>
-			case 2:
-				return <FlightTable flights={flightsToArrive} type='departure'/>
-			case 3:
-				return <Reception />
-			default:
-				break;
-		}
-	}
 
   return (
 		<>
 			<div>
 				<div className={styles.app}>
-					<Stops data={data} />
-					{
-						setRightBlock()
-					}
+					<RouteContext.Provider value={data}>
+						<Stops />
+					</RouteContext.Provider>
+					<RightBlock />
 				</div>
 			</div>
 		</>

@@ -1,20 +1,3 @@
-import route from '../assets/routesIcons/number_Route.png'
-import route_1 from '../assets/routesIcons/number_Route_1.png'
-import route_2 from '../assets/routesIcons/number_Route_2.png'
-import route_3 from '../assets/routesIcons/number_Route_3.png'
-import route_4 from '../assets/routesIcons/number_Route_4.png'
-import route_5 from '../assets/routesIcons/number_Route_5.png'
-import route_6 from '../assets/routesIcons/number_Route_6.png'
-import route_7 from '../assets/routesIcons/number_Route_7.png'
-import route_8 from '../assets/routesIcons/number_Route_8.png'
-import route_9 from '../assets/routesIcons/number_Route_9.png'
-import route_10 from '../assets/routesIcons/number_Route_10.png'
-import route_11 from '../assets/routesIcons/number_Route_11.png'
-import route_12 from '../assets/routesIcons/number_Route_12.png'
-import route_13 from '../assets/routesIcons/number_Route_13.png'
-import station  from '../assets/routesIcons/icon_Metro-Station.png'
-import station_1  from '../assets/routesIcons/icon_Metro-Station_1.png'
-
 export type TFlight = {
 	time: string;
 	number_roure: string;
@@ -142,21 +125,3 @@ export const flightsToFly = [
 	},
 ]
 
-export const icons = [
-	route,
-	route_1,
-	route_2,
-	route_3,
-	route_4,
-	route_5,
-	route_6,
-	route_7,
-	route_8,
-	route_9,
-	route_10,
-	route_11,
-	route_12,
-	route_13,
-	station,
-	station_1
-]

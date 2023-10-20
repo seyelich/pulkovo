@@ -4,8 +4,8 @@ export type TSpeed = {
 
 export type TTransfer = {
 	icons: string[];
-	nameRus: string;
-	nameEng: string
+	nameRus?: string;
+	nameEng?: string
 }
 
 export type TPoi = {
@@ -27,7 +27,7 @@ export type TFullStop = {
 	nameEng: string;
 	iconsAfter: string[]
 	transfers: TTransfer[];
-	POI: TPoi[];
+	poi: TPoi[];
 }
 
 export type TStop = {
@@ -35,10 +35,14 @@ export type TStop = {
 	time: number;
 }
 
-type TStopTimes = {
-	stops: TStop[]
+export type TStopTimes = {
+	stops: TStop[];
 }
 
-export type TWsMessage = TStopTimes & TSpeed & TRoute & {
+export type TStopStart = {
+	index: number;
+}
+
+export type TWsMessage = (TStopTimes | TSpeed | TRoute | TStopStart) & {
 	type: string;
 }
