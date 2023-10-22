@@ -1,16 +1,17 @@
 @import url(./assets/fonts/fonts.css);
 
 :root {
-  font-family: 'PTRootUI', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  color:rgba(0, 25, 20, 1);
+	font-family: 'PTRootUI', system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	color: rgba(0, 25, 20, 1);
 }
 
 body {
 	margin: 0;
 }
 
-p, h1 {
+p,
+h1 {
 	margin: 0;
 }
 

@@ -1,23 +1,23 @@
-import { createContext } from 'react'
-import { TFullStop, TPlayImage }from '../types'
+import { createContext } from 'react';
+import { TFullStop, TPlayImage } from '../types';
 
-export type TContextStop = (TFullStop & { time: number });
+export type TContextStop = TFullStop & { time: number };
 
 export type TLeftContext = {
 	route: {
-		icon: string,
-		color: string,
-		fontColor: string,
-		name: string,
-	}
-	speed: number,
-	currStop: TFullStop | undefined,
-	stops: TContextStop[],
-}
+		icon: string;
+		color: string;
+		fontColor: string;
+		name: string;
+	};
+	speed: number;
+	currStop: TFullStop | undefined;
+	stops: TContextStop[];
+};
 
 export type TRightContext = {
 	image: TPlayImage;
-}
+};
 
 export const LeftInitState = {
 	route: {
@@ -28,8 +28,8 @@ export const LeftInitState = {
 	},
 	speed: 0,
 	currStop: undefined,
-	stops: []
-}
+	stops: [],
+};
 
 export const RightInitState = {
 	image: {
@@ -37,7 +37,7 @@ export const RightInitState = {
 		label: '',
 		length: 0,
 	},
-}
+};
 
 export const LeftContext = createContext<TLeftContext>(LeftInitState);
 export const RightContext = createContext<TRightContext>(RightInitState);

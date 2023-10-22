@@ -5,7 +5,7 @@ export type TFlight = {
 	company: string;
 	plane_type: string;
 	status: string;
-}
+};
 
 export const flightsToArrive: TFlight[] = [
 	{
@@ -64,7 +64,7 @@ export const flightsToArrive: TFlight[] = [
 		plane_type: 'A320',
 		status: 'Прибыл в 16:32',
 	},
-]
+];
 
 export const flightsToFly = [
 	{
@@ -123,5 +123,4 @@ export const flightsToFly = [
 		plane_type: 'A320',
 		status: 'Регистрация 14-88',
 	},
-]
-
+];

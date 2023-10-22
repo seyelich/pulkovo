@@ -1,7 +1,7 @@
 .app {
-  width: 1920px;
+	width: 1920px;
 	height: 540px;
-  margin: 0 auto;
+	margin: 0 auto;
 	display: grid;
 	grid-template-columns: repeat(2, 960px);
 	overflow: hidden;
@@ -14,21 +14,22 @@
 }
 
 .loader {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+	display: inline-block;
+	width: 80px;
+	height: 80px;
 }
 
 .loader:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid rgba(182, 229, 255, 1);
-  border-color: rgba(182, 229, 255, 1) transparent rgba(182, 229, 255, 1) transparent;
-  animation: loader 1.2s linear infinite;
+	content: ' ';
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin: 8px;
+	border-radius: 50%;
+	border: 6px solid rgba(182, 229, 255, 1);
+	border-color: rgba(182, 229, 255, 1) transparent rgba(182, 229, 255, 1)
+		transparent;
+	animation: loader 1.2s linear infinite;
 }
 
 .error {
@@ -38,10 +39,10 @@
 }
 
 @keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
