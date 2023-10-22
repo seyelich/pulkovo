@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { FlightTable } from '../FlightsTable/FlightsTable';
 import { Reception } from '../Reception/Reception';
 import { flightsToArrive } from '../../utils/data';
-import city from '../../assets/Pic.png';
+import { RightContext } from '../../utils/store';
+import styles from './RightBlock.module.css';
 
 export const RightBlock = () => {
 	const [stage, setStage] = useState(0);
+	const { image } = useContext(RightContext);
 	
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -18,7 +20,11 @@ export const RightBlock = () => {
 	const setRightBlock = () => {
 		switch (stage) {
 			case 0:
-				return <img src={city} alt='Москва' />
+				return (
+					<div className={styles.imageContainer}>
+						<img src={image.src} alt={image.label} />
+					</div>
+				)
 			case 1:
 				return <FlightTable flights={flightsToArrive} type='arrival'/>
 			case 2:

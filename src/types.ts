@@ -43,6 +43,12 @@ export type TStopStart = {
 	index: number;
 }
 
-export type TWsMessage = (TStopTimes | TSpeed | TRoute | TStopStart) & {
+export type TPlayImage = {
+	src: string,
+	label: string,
+	length: number
+}
+
+export type TWsMessage = (TStopTimes | TSpeed | TRoute | TStopStart | TPlayImage) & {
 	type: string;
 }

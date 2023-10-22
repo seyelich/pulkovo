@@ -1,50 +1,44 @@
 import styles from './App.module.css'
 import { useEffect, useState } from 'react';
 import { Stops } from '../Stops/Stops';
-import useWebSocket from 'react-use-websocket';
-import { TFullStop, TRoute, TSpeed, TStopStart, TStopTimes, TWsMessage } from '../../types';
-import { RouteContext, TRouteContext } from '../../utils/store';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { TFullStop, TPlayImage, TRoute, TSpeed, TStopStart, TStopTimes, TWsMessage } from '../../types';
+import { LeftContext, LeftInitState, RightContext, RightInitState, TLeftContext, TRightContext } from '../../utils/store';
 import { RightBlock } from '../RightBlock/RightBlock';
+import { socketUrl } from '../../utils/constants';
 
-const {
-	VITE_ICONS_URL,
-	VITE_WS_ID,
-} = import.meta.env;
-
+const { VITE_ICONS_URL } = import.meta.env;
 
 function App() {
-	const socketUrl = `ws://${VITE_WS_ID}`;
 	const [allStops, setAllStops] = useState<TFullStop[]>([]);
-	const [data, setData] = useState<TRouteContext>({
-		route: {
-			icon: '',
-			color: '',
-			fontColor: '',
-			name: '',
-		},
-		speed: 0,
-		currStop: undefined,
-		stops: [],
-	});
+	const [left, setLeft] = useState<TLeftContext>(LeftInitState);
+	const [right, setRight] = useState<TRightContext>(RightInitState);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(false);
 
-  const { lastJsonMessage } = useWebSocket<TWsMessage>(socketUrl, {
-		onError: (err) => { console.log(err) },
+  const { lastJsonMessage, readyState } = useWebSocket<TWsMessage>(socketUrl, {
+		onError: () => { 
+			setError(true);
+			setIsLoading(false);
+		},
 		onClose: () => { console.log("Connection closed")},
-		onOpen: () => { console.log("Connection opened")},
+		onOpen: () => { setIsLoading(false) },
 	});
 
   useEffect(() => {
+		if(readyState === ReadyState.CONNECTING) setIsLoading(true);
 		if(!lastJsonMessage) return;
 		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute;
 		const { index } = lastJsonMessage as TStopStart;
 		const { speed } = lastJsonMessage as TSpeed;
+		const { src, label, length } = lastJsonMessage as TPlayImage;
 		const currStop = stops?.find(el => el.index === index);
 
 		switch (lastJsonMessage.type) {
 			case "ROUTE":
 				setAllStops(stops);
-				setData({ 
-					...data, 
+				setLeft({ 
+					...left, 
 					route: {
 						icon: VITE_ICONS_URL + '/' + icon,
 						color,
@@ -54,10 +48,10 @@ function App() {
 				})
 				break;
 			case "SPEED":
-				setData({ ...data, speed: speed })
+				setLeft({ ...left, speed: speed })
 				break;
 			case "STOP_BEGIN":
-				setData({ ...data, currStop })
+				setLeft({ ...left, currStop })
 				break;
 			case "STOP_TIMES": {
 				const stops = [];
@@ -71,9 +65,20 @@ function App() {
 					})
 				}
 				
-				setData({
-					...data,
+				setLeft({
+					...left,
 					stops: stops
+				})
+			}
+				break;
+			case "PLAY_IMAGE": {
+				setRight({
+					...right,
+					image: {
+						src: VITE_ICONS_URL + src,
+						label,
+						length,					
+					}
 				})
 			}
 				break;
@@ -81,16 +86,22 @@ function App() {
   }, [lastJsonMessage]);
 
   return (
-		<>
-			<div>
-				<div className={styles.app}>
-					<RouteContext.Provider value={data}>
-						<Stops />
-					</RouteContext.Provider>
-					<RightBlock />
-				</div>
-			</div>
-		</>
+		<div className={`${styles.app} ${(isLoading || error) && styles.appOnLoading}`}>
+			{
+				isLoading ? 
+					<div className={styles.loader}></div> :
+					error ?
+						<p className={styles.error}>Произошла ошибка</p> :
+						<>
+							<LeftContext.Provider value={left}>
+								<Stops />
+							</LeftContext.Provider>
+							<RightContext.Provider value={right}>
+								<RightBlock />
+							</RightContext.Provider>
+						</>
+			}
+	</div>
   )
 }
 

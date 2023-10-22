@@ -4,10 +4,10 @@ import { Header } from "../Header/Header"
 import { Routes } from "../Routes/Routes"
 import { StopTemplate } from "../StopTemplate/StopTemplate"
 import styles from './Stops.module.css'
-import { RouteContext } from '../../utils/store'
+import { LeftContext } from '../../utils/store'
 
 export const Stops = () => {
-	const { route, speed, stops, currStop } = useContext(RouteContext)
+	const { route, speed, stops, currStop } = useContext(LeftContext)
 	const isGoing = speed !== 0;
 	const index = stops.length > 4 ? 0 : stops.length;
 	const transfers = currStop?.transfers;
