@@ -3,11 +3,10 @@ import styles from './StopTemplate.module.css';
 
 type TStopTemplate = {
 	stop: TContextStop;
-	isGoing: boolean;
 	isLast: boolean;
 };
 
-export const StopTemplate = ({ stop, isGoing, isLast }: TStopTemplate) => {
+export const StopTemplate = ({ stop, isLast }: TStopTemplate) => {
 	return (
 		<li className={styles.stop}>
 			<div className={styles.timeContainer}>
@@ -31,8 +30,8 @@ export const StopTemplate = ({ stop, isGoing, isLast }: TStopTemplate) => {
 					strokeWidth="4"
 				/>
 			</svg>
-			<div className={isGoing ? styles.textOnGoing : undefined}>
-				<p className={`${styles.name} ${isGoing && styles.nameOnGoing}`}>
+			<div>
+				<p className={styles.name}>
 					{stop.nameRus}
 				</p>
 				<p className={styles.name_en}>{stop.nameEng}</p>

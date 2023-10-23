@@ -36,7 +36,7 @@ export const Routes = ({
 				{transfers.map((el, iu) => {
 					return (
 						<div className={styles.row}>
-							<img className={styles.icon} src={el.icons[0]} alt="Тип ТС" />
+							<img className={styles.icon} src={VITE_ICONS_URL + el.icons[0]} alt="Тип ТС" />
 							<ul
 								key={iu}
 								className={`${styles.list} ${el.nameRus && styles.listMetro}`}
@@ -45,7 +45,7 @@ export const Routes = ({
 									<li key={il} ref={il === 0 ? firstRef : lastRef}>
 										<img
 											className={styles.icon}
-											src={VITE_ICONS_URL + '/' + icon}
+											src={VITE_ICONS_URL + icon}
 											alt="Номер маршрута"
 										/>
 									</li>

@@ -3,6 +3,13 @@ import { TFullStop, TPlayImage } from '../types';
 
 export type TContextStop = TFullStop & { time: number };
 
+export type TRoute = {
+	icon: string;
+	color: string;
+	fontColor: string;
+	name: string;
+};
+
 export type TLeftContext = {
 	route: {
 		icon: string;

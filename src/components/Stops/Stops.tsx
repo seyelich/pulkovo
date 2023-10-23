@@ -8,15 +8,14 @@ import { LeftContext } from '../../utils/store';
 
 export const Stops = () => {
 	const { route, speed, stops, currStop } = useContext(LeftContext);
-	const isGoing = speed !== 0;
 	const index = stops.length > 4 ? 0 : stops.length;
-	const transfers = currStop?.transfers;
+	const transfers = currStop?.transfers!;
 
 	const lineHeight = () => {
 		const height = index === 0 ? 436 : 404 - 116 * (index + 1); //use height of blocks
 		const heightOnGoing = index === 0 ? 476 : 400 - 108 * index;
 
-		if (isGoing) return heightOnGoing > 0 ? heightOnGoing : 0;
+		if (currStop) return heightOnGoing > 0 ? heightOnGoing : 0;
 		else return height > 0 ? height : 0;
 	};
 
@@ -25,7 +24,7 @@ export const Stops = () => {
 			<Header el={currStop ? currStop : route} />
 			{
 				<>
-					{currStop && transfers ? (
+					{currStop && transfers?.length !== 0 ? (
 						<Routes
 							transfers={transfers}
 							isLast={currStop?.index === stops.length - 1}
@@ -42,7 +41,7 @@ export const Stops = () => {
 							>
 								<rect width="2" height={lineHeight()} fill="#D9D9D9" />
 							</svg>
-							{index === stops.length - 1 && !isGoing ? (
+							{index === stops.length - 1 && !currStop ? (
 								<p className={styles.lastStop}>Конечная</p>
 							) : (
 								stops
@@ -51,7 +50,6 @@ export const Stops = () => {
 										<StopTemplate
 											key={i}
 											stop={el}
-											isGoing={i === 0 && isGoing}
 											isLast={i === stops.length - 1}
 										/>
 									))

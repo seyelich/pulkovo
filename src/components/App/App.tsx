@@ -51,7 +51,8 @@ function App() {
 		const { index } = lastJsonMessage as TStopStart;
 		const { speed } = lastJsonMessage as TSpeed;
 		const { src, label, length } = lastJsonMessage as TPlayImage;
-		const currStop = stops?.find((el) => el.index === index);
+
+		//@TODO fix route title & icon
 
 		switch (lastJsonMessage.type) {
 			case 'ROUTE':
@@ -59,7 +60,7 @@ function App() {
 				setLeft({
 					...left,
 					route: {
-						icon: VITE_ICONS_URL + '/' + icon,
+						icon: VITE_ICONS_URL + icon,
 						color,
 						fontColor,
 						name: stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus,
@@ -70,7 +71,10 @@ function App() {
 				setLeft({ ...left, speed: speed });
 				break;
 			case 'STOP_BEGIN':
-				setLeft({ ...left, currStop });
+				setLeft({ ...left, currStop: left.stops?.find(el => el.index === index)});
+				break;
+			case 'STOP_END':
+				setLeft({ ...left, currStop: undefined });
 				break;
 			case 'STOP_TIMES':
 				{
@@ -93,18 +97,17 @@ function App() {
 				}
 				break;
 			case 'PLAY_IMAGE':
-				{
-					setRight({
-						...right,
-						image: {
-							src: VITE_ICONS_URL + src,
-							label,
-							length,
-						},
-					});
-				}
+				setRight({
+					...right,
+					image: {
+						src: VITE_ICONS_URL + src,
+						label,
+						length,
+					},
+				});
 				break;
 		}
+		// console.log(left.route, icon) 
 	}, [lastJsonMessage]);
 
 	return (
