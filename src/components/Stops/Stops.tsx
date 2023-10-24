@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import { Routes } from '../Routes/Routes';
@@ -8,16 +8,19 @@ import { LeftContext } from '../../utils/store';
 
 export const Stops = () => {
 	const { route, speed, stops, currStop } = useContext(LeftContext);
-	const index = stops.length > 4 ? 0 : stops.length;
-	const transfers = currStop?.transfers!;
+	const [ lineHeight, setLineHeight ] = useState(0);
+	const index = stops.length >= 4 ? 0 : stops.length;
+	const transfers = currStop?.transfers;
+	const listRef = useRef<HTMLUListElement>(null);
+	const listElRef = useRef<HTMLLIElement>(null);
+	const listHeight = listRef?.current?.clientHeight;
+	const listElHeight = listElRef?.current?.clientHeight;
+	// console.log(listHeight, listElHeight);
 
-	const lineHeight = () => {
-		const height = index === 0 ? 436 : 404 - 116 * (index + 1); //use height of blocks
-		const heightOnGoing = index === 0 ? 476 : 400 - 108 * index;
-
-		if (currStop) return heightOnGoing > 0 ? heightOnGoing : 0;
-		else return height > 0 ? height : 0;
-	};
+	useEffect(() => {
+		const h = listHeight && listElHeight && listHeight - listElHeight * index;
+		setLineHeight(lineHeight => h? h : lineHeight);
+	}, [index, listHeight, listElHeight])
 
 	return (
 		<div className={styles.leftBlock}>
@@ -26,31 +29,32 @@ export const Stops = () => {
 				<>
 					{currStop && transfers?.length !== 0 ? (
 						<Routes
-							transfers={transfers}
+							transfers={transfers!}
 							isLast={currStop?.index === stops.length - 1}
 						/>
 					) : (
-						<ul className={styles.stops}>
+						<ul className={styles.stops} ref={listRef}>
 							<svg
 								className={styles.line}
 								width="2"
-								height={lineHeight()}
-								viewBox={`0 0 2 ${lineHeight()}`}
+								height={lineHeight}
+								viewBox={`0 0 2 ${lineHeight}`}
 								fill="none"
 								xmlns="http://www.w3.org/2000/svg"
 							>
-								<rect width="2" height={lineHeight()} fill="#D9D9D9" />
+								<rect width="2" height={lineHeight} fill="#D9D9D9" />
 							</svg>
 							{index === stops.length - 1 && !currStop ? (
 								<p className={styles.lastStop}>Конечная</p>
 							) : (
 								stops
-									.slice(0, 4)
+									.slice(currStop ? 1 : 0, 4)
 									.map((el, i) => (
 										<StopTemplate
 											key={i}
 											stop={el}
 											isLast={i === stops.length - 1}
+											ref={listElRef}
 										/>
 									))
 							)}

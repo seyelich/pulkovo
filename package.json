@@ -9,7 +9,7 @@
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"format": "prettier . --write",
 		"preview": "vite preview",
-		"pulkovo": "cross-env VITE_WS_IP=192.168.100.194:23245 vite --port 3000",
+		"pulkovo": "cross-env VITE_WS_IP=192.168.100.194:23245 VITE_ICONS_URL=http://192.168.100.194:8080/ vite --port 3000",
 		"moscow": "cross-env VITE_WS_IP=192.168.100.95:23245 vite --port 3001",
 		"local": "cross-env VITE_WS_IP=localhost:23245 vite --port 3002"
 	},

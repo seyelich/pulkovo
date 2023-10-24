@@ -24,6 +24,8 @@ import { socketUrl } from '../../utils/constants';
 
 const { VITE_ICONS_URL } = import.meta.env;
 
+console.log(VITE_ICONS_URL);
+
 function App() {
 	const [allStops, setAllStops] = useState<TFullStop[]>([]);
 	const [left, setLeft] = useState<TLeftContext>(LeftInitState);
@@ -107,8 +109,7 @@ function App() {
 				});
 				break;
 		}
-		// console.log(left.route, icon) 
-	}, [lastJsonMessage]);
+	}, [lastJsonMessage, readyState]);
 
 	return (
 		<div
