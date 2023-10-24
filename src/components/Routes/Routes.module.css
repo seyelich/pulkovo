@@ -11,13 +11,13 @@
 
 .iconsContainer {
 	display: flex;
+	flex-direction: column;
 	gap: 16px;
-	align-items: center;
-	margin-bottom: 16px;
 }
 
-.iconsContainer:last-of-type {
-	margin-bottom: 0;
+.row {
+	display: flex;
+	gap: 16px;
 }
 
 .list {
@@ -25,6 +25,8 @@
 	column-gap: 16px;
 	row-gap: 8px;
 	flex-wrap: wrap;
+	max-height: 108px;
+	overflow-y: hidden;
 }
 
 .listMetro {
@@ -41,4 +43,9 @@
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 16px;
+}
+
+.icon {
+	height: 50px;
+	display: block;
 }

@@ -1,53 +1,66 @@
-import busIcon from '../../assets/icon_Bus.png'
-import trolleyIcon from '../../assets/icon_Trolley.png'
-import metroIcon from '../../assets/icon_Metro.svg'
-import { TStop, icons } from '../../utils/data'
-import styles from './Routes.module.css'
+import styles from './Routes.module.css';
+import { TTransfer } from '../../types';
+import { useEffect, useRef } from 'react';
 
-export const Routes = ({ stop }: { stop: TStop }) => {
-	const setIcons = (arr: string[], type: 'Bus' | 'Trolley' | 'Metro') => {
-		let icon = '';
+const { VITE_ICONS_URL } = import.meta.env;
 
-		switch (type) {
-			case 'Bus':
-				icon = busIcon
-				break;
-			case 'Trolley':
-				icon = trolleyIcon
-				break;
-			case 'Metro':
-				icon = metroIcon
-				break;
+export const Routes = ({
+	transfers,
+	isLast,
+}: {
+	transfers: TTransfer[];
+	isLast: boolean;
+}) => {
+	const lastRef = useRef<HTMLLIElement>(null);
+	const firstRef = useRef<HTMLLIElement>(null);
+
+	useEffect(() => {
+		if (transfers.find((el) => el.icons.length > 14)) {
+			setInterval(() => {
+				lastRef.current?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'end',
+				});
+				firstRef.current?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}, 10000);
 		}
-		
-		return (
-			<div className={styles.iconsContainer}>
-				<img src={icon} alt={type} />
-				<ul className={`${styles.list} ${type === 'Metro' && styles.listMetro}`}>
-					{
-						arr.map((el: string, i) => <li key={i}><img src={el} alt='Номер маршрута' /></li>)
-					}
-				</ul>
-				{
-					type === 'Metro' &&
-					<div>
-						<p className={styles.station}>Каланчёвская</p>
-						<p className={styles.stationEng}>Kalanchevskaya</p>
-					</div>
-				}
-			</div>
-		)
-	}
-	
+	}, [transfers]);
+
 	return (
 		<div className={styles.container}>
-			{
-				stop.isLast &&
-				<p className={styles.finalStop}>Конечная</p>
-			}
-			{ setIcons(icons.slice(0, 12), 'Bus') }
-			{ setIcons(icons.slice(12, 14), 'Trolley') }
-			{ setIcons(icons.slice(14, 16), 'Metro') }
+			{isLast && <p className={styles.finalStop}>Конечная</p>}
+			<div className={styles.iconsContainer}>
+				{transfers.map((el, iu) => {
+					return (
+						<div className={styles.row}>
+							<img className={styles.icon} src={VITE_ICONS_URL + el.icons[0]} alt="Тип ТС" />
+							<ul
+								key={iu}
+								className={`${styles.list} ${el.nameRus && styles.listMetro}`}
+							>
+								{el.icons.slice(1).map((icon, il) => (
+									<li key={il} ref={il === 0 ? firstRef : lastRef}>
+										<img
+											className={styles.icon}
+											src={VITE_ICONS_URL + icon}
+											alt="Номер маршрута"
+										/>
+									</li>
+								))}
+								{el.nameRus && (
+									<div>
+										<p className={styles.station}>{el.nameRus}</p>
+										<p className={styles.stationEng}>{el.nameEng}</p>
+									</div>
+								)}
+							</ul>
+						</div>
+					);
+				})}
+			</div>
 		</div>
-	)
-}
+	);
+};

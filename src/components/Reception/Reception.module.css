@@ -1,14 +1,21 @@
 .container {
 	border-left: 2px solid rgba(217, 217, 217, 1);
-	padding: 8px 32px 29px 31px;
+	padding: 8px 32px 29px 32px;
+	display: flex;
+	flex-direction: column;
 }
 
 .content {
-	display: flex;
-	margin: 38px 0 45px 0;
-	align-items: center;
-	gap: 56px;
-	align-items: center;
+	margin-top: 38px;
+	width: 100%;
+}
+
+.image {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 12px;
+	object-fit: contain;
 }
 
 .floor {
@@ -36,28 +43,4 @@
 	font-size: 28px;
 	font-weight: 500;
 	line-height: 42px;
-}
-
-.enter {
-	display: flex;
-	gap: 8px;
-}
-
-.par {
-	font-size: 32px;
-	font-weight: 700;
-	line-height: 32px;
-}
-
-.parEng {
-	font-size: 20px;
-	font-weight: 500;
-	line-height: 30px;
-}
-
-.enterContainer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 40px;
 }

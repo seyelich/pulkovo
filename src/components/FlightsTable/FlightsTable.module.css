@@ -1,5 +1,8 @@
 .content {
+	display: flex;
+	flex-direction: column;
 	border-left: 2px solid rgba(51, 71, 67, 1);
+	width: 100%;
 	overflow: hidden;
 }
 
@@ -20,7 +23,6 @@
 .table {
 	border-collapse: collapse;
 	color: rgba(0, 25, 20, 1);
-	margin-top: -18px;
 }
 
 .header {
@@ -58,4 +60,10 @@
 
 .status {
 	width: 180px;
+}
+
+@media screen and (max-width: 1920px) {
+	.table {
+		margin-top: -18px;
+	}
 }

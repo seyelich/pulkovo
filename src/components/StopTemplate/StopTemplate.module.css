@@ -22,23 +22,10 @@
 	margin: 0 35px 0 22.5px;
 }
 
-.textOnGoing {
-	background-color: #B6E5FF;
-	width: 640px;
-	height: 100%;
-	vertical-align: center;
-	padding: 16px;
-	box-sizing: border-box;
-}
-
 .name {
 	font-size: 32px;
 	font-weight: 500;
 	line-height: 32px;
-}
-
-.nameOnGoing {
-	font-weight: 700;
 }
 
 .name_en {

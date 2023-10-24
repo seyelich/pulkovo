@@ -1,56 +1,70 @@
-import { stops } from "../../utils/data"
-import { Footer } from "../Footer/Footer"
-import { Header } from "../Header/Header"
-import { Routes } from "../Routes/Routes"
-import { StopTemplate } from "../StopTemplate/StopTemplate"
-import styles from './Stops.module.css'
-import { useState, useEffect } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Footer } from '../Footer/Footer';
+import { Header } from '../Header/Header';
+import { Routes } from '../Routes/Routes';
+import { StopTemplate } from '../StopTemplate/StopTemplate';
+import styles from './Stops.module.css';
+import { LeftContext } from '../../utils/store';
 
-export const Stops = ({ isGoing }: { isGoing: boolean}) => {
-	const [index, setIndex] = useState(0);
+export const Stops = () => {
+	const { route, speed, stops, currStop } = useContext(LeftContext);
+	const [ lineHeight, setLineHeight ] = useState(0);
+	const index = stops.length >= 4 ? 0 : stops.length;
+	const transfers = currStop?.transfers;
+	const listRef = useRef<HTMLUListElement>(null);
+	const listElRef = useRef<HTMLLIElement>(null);
+	const listHeight = listRef?.current?.clientHeight;
+	const listElHeight = listElRef?.current?.clientHeight;
+	// console.log(listHeight, listElHeight);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			index < stops.length && setIndex(index => index+1);
-			index === stops.length && setIndex(0);
-		}, 3000);
-		return () => clearInterval(interval);
-	}, [index]);
+		const h = listHeight && listElHeight && listHeight - listElHeight * index;
+		setLineHeight(lineHeight => h? h : lineHeight);
+	}, [index, listHeight, listElHeight])
 
-	const lineHeight= () => {
-		const height = index === 0 ? 436 : 404 - 116*(index+1);
-		const heightOnGoing = index === 0 ? 476 : 400 - 108*index;
-
-		if(isGoing) return heightOnGoing > 0 ? heightOnGoing : 0;
-		else return height > 0 ? height : 0;
-	}
-	
 	return (
 		<div className={styles.leftBlock}>
-			<Header el={index === stops.length ? stops[index-1] : stops[index]} isGoing={isGoing} />
+			<Header el={currStop ? currStop : route} />
 			{
 				<>
-					{
-						index === stops.length ? 
-						<Routes stop={index === stops.length ? stops[index-1] : stops[index]} /> :
-						<ul className={styles.stops}>
-							<svg className={styles.line} width="2" height={lineHeight()} viewBox={`0 0 2 ${lineHeight()}` }fill="none" xmlns="http://www.w3.org/2000/svg">
-								<rect width="2" height={lineHeight()} fill="#D9D9D9"/>
+					{currStop && transfers?.length !== 0 ? (
+						<Routes
+							transfers={transfers!}
+							isLast={currStop?.index === stops.length - 1}
+						/>
+					) : (
+						<ul className={styles.stops} ref={listRef}>
+							<svg
+								className={styles.line}
+								width="2"
+								height={lineHeight}
+								viewBox={`0 0 2 ${lineHeight}`}
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<rect width="2" height={lineHeight} fill="#D9D9D9" />
 							</svg>
-							{
-								index === stops.length-1 && !isGoing ? 
-								<p className={styles.lastStop}>Конечная</p> :
+							{index === stops.length - 1 && !currStop ? (
+								<p className={styles.lastStop}>Конечная</p>
+							) : (
 								stops
-									.slice(isGoing ? index : index+1)
-									.map((el, i) => <StopTemplate key={i} stop={el} isGoing={i === 0  && isGoing} />)
-							}
+									.slice(currStop ? 1 : 0, 4)
+									.map((el, i) => (
+										<StopTemplate
+											key={i}
+											stop={el}
+											isLast={i === stops.length - 1}
+											ref={listElRef}
+										/>
+									))
+							)}
 						</ul>
-					}
+					)}
 				</>
 			}
 			<div className={styles.shadow}>
-				<Footer />
+				<Footer speed={speed} />
 			</div>
 		</div>
-	)
-}
+	);
+};
