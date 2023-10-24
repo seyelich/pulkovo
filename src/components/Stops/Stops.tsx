@@ -22,6 +22,8 @@ export const Stops = () => {
 		setLineHeight(lineHeight => h? h : lineHeight);
 	}, [index, listHeight, listElHeight])
 
+	//@TODO: fix bug when the last stop left && add POI condition
+
 	return (
 		<div className={styles.leftBlock}>
 			<Header el={currStop ? currStop : route} />

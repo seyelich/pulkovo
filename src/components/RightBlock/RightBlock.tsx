@@ -17,6 +17,8 @@ export const RightBlock = () => {
 		return () => clearInterval(interval);
 	}, [stage]);
 
+	//@TODO: add duration of displaying the image
+
 	const setRightBlock = () => {
 		switch (stage) {
 			case 0:

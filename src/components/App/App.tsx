@@ -62,6 +62,7 @@ function App() {
 				setLeft({
 					...left,
 					route: {
+						...left.route,
 						icon: VITE_ICONS_URL + icon,
 						color,
 						fontColor,
