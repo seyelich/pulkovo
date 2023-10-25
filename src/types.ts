@@ -53,6 +53,26 @@ export type TTemp = {
 	temperature: number;
 };
 
+export type TFlight = {
+	time: string;
+	direction: string;
+	flightNumber: string;
+	status: string;
+	company: string; // нет в пакете
+	planeType: string; // нет в пакете
+	counters?: string;
+};
+
+export type TPulkovoSubtype = 'DEPARTURE' | 'ARRIVAL' | 'COUNTERS';
+
+export type TPulkovo = {
+	subtype: TPulkovoSubtype,
+  duration: number,
+  color: string,
+  contents?: TFlight[];
+	src?: string;
+}
+
 export type TWsMessage = (
 	| TStopTimes
 	| TSpeed
@@ -60,6 +80,7 @@ export type TWsMessage = (
 	| TStopStart
 	| TPlayMedia
 	| TTemp
+	| TPulkovo
 ) & {
 	type: string;
 };

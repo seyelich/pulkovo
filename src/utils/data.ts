@@ -1,67 +1,70 @@
-export type TFlight = {
-	time: string;
-	number_roure: string;
-	direction: string;
-	company: string;
-	plane_type: string;
-	status: string;
-};
+import { TFlight } from "../types";
+
+export const pulkovoSubtypes = {
+	ARRIVAL: 'ARRIVAL',
+	DEPARTURE: 'DEPARTURE',
+	COUNTERS: 'COUNTERS',
+} as {
+	ARRIVAL: 'ARRIVAL',
+	DEPARTURE: 'DEPARTURE',
+	COUNTERS: 'COUNTERS',
+}
 
 export const flightsToArrive: TFlight[] = [
 	{
 		time: '12:00',
-		number_roure: 'DP 517',
+		flightNumber: 'DP 517',
 		direction: 'Волгоград',
 		company: 'Аэрофлот',
-		plane_type: 'B738',
+		planeType: 'B738',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '12:15',
-		number_roure: 'FV 6014',
+		flightNumber: 'FV 6014',
 		direction: 'Москва (DME)',
 		company: 'Аэрофлот',
-		plane_type: 'SU95',
+		planeType: 'SU95',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '12:41',
-		number_roure: 'FV 6765',
+		flightNumber: 'FV 6765',
 		direction: 'Минеральные Воды',
 		company: 'Победа',
-		plane_type: 'ХХХХX',
+		planeType: 'ХХХХX',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '13:05',
-		number_roure: 'S7 1028',
+		flightNumber: 'S7 1028',
 		direction: 'Название длинное, в две строки',
 		company: 'Аэрофлот',
-		plane_type: 'B738',
+		planeType: 'B738',
 		status: 'Задерживается',
 	},
 	{
 		time: '13:30',
-		number_roure: 'SU 2814',
+		flightNumber: 'SU 2814',
 		direction: 'Сочи',
 		company: 'Россия',
-		plane_type: 'A319',
+		planeType: 'A319',
 		status: 'Ожидается в 13:30',
 	},
 	{
 		time: '14:55',
-		number_roure: 'YC 856',
+		flightNumber: 'YC 856',
 		direction: 'Самара',
 		company: 'S7',
-		plane_type: 'A20N',
+		planeType: 'A20N',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '16:00',
-		number_roure: 'FV 6233',
+		flightNumber: 'FV 6233',
 		direction: 'Гянджа',
 		company: 'AZAL',
-		plane_type: 'A320',
+		planeType: 'A320',
 		status: 'Прибыл в 16:32',
 	},
 ];
@@ -69,58 +72,58 @@ export const flightsToArrive: TFlight[] = [
 export const flightsToFly = [
 	{
 		time: '12:00',
-		number_roure: 'FV 6014',
+		flightNumber: 'FV 6014',
 		direction: 'Москва (SVO)',
 		company: 'S7',
-		plane_type: 'A320',
+		planeType: 'A320',
 		status: 'Отправлен в 12:01',
 	},
 	{
 		time: '12:00',
-		number_roure: 'DP 517',
+		flightNumber: 'DP 517',
 		direction: 'Пенза',
 		company: 'Аэрофлот',
-		plane_type: 'SU 95',
+		planeType: 'SU 95',
 		status: 'Отправлен в 12:03',
 	},
 	{
 		time: '12:00',
-		number_roure: 'DP 507',
+		flightNumber: 'DP 507',
 		direction: 'Владикавказ',
 		company: 'Россия',
-		plane_type: 'A20N',
+		planeType: 'A20N',
 		status: 'Задерживается',
 	},
 	{
 		time: '12:38',
-		number_roure: 'YC 856',
+		flightNumber: 'YC 856',
 		direction: 'Москва (DME)',
 		company: 'AZAL',
-		plane_type: 'B738',
+		planeType: 'B738',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '14:10',
-		number_roure: 'FV 6014',
+		flightNumber: 'FV 6014',
 		direction: 'Иркутск',
 		company: 'Ямал',
-		plane_type: 'A320',
+		planeType: 'A320',
 		status: 'Регистрация 14-88',
 	},
 	{
 		time: '15:40',
-		number_roure: 'FV 6014',
+		flightNumber: 'FV 6014',
 		direction: 'Салехард',
 		company: 'Аэрофлот',
-		plane_type: 'A319',
+		planeType: 'A319',
 		status: 'Отправлен в 15:40',
 	},
 	{
 		time: '18:20',
-		number_roure: 'J2 5121',
+		flightNumber: 'J2 5121',
 		direction: 'Москва (SVO)',
 		company: 'S7',
-		plane_type: 'A320',
+		planeType: 'A320',
 		status: 'Регистрация 14-88',
 	},
 ];

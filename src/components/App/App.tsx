@@ -5,6 +5,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {
 	TFullStop,
 	TPlayMedia,
+	TPulkovo,
 	TRoute,
 	TSpeed,
 	TStopStart,
@@ -25,8 +26,6 @@ import { socketUrl } from '../../utils/constants';
 
 const { VITE_ICONS_URL } = import.meta.env;
 
-console.log(VITE_ICONS_URL);
-
 function App() {
 	const [allStops, setAllStops] = useState<TFullStop[]>([]);
 	const [left, setLeft] = useState<TLeftContext>(LeftInitState);
@@ -42,6 +41,7 @@ function App() {
 			},
 			onClose: () => {
 				console.log('Connection closed');
+				setIsLoading(false);
 			},
 			onOpen: () => {
 				setIsLoading(false);
@@ -58,6 +58,8 @@ function App() {
 		const { src, label, length } = lastJsonMessage as TPlayMedia;
 
 		//@TODO fix route title & icon
+		// почему-то перезаписывается left.route при первом STOP_END, который идет сразу после ROUTE
+		// если закомментить setLeft при первом STOP_END, а потом раскомментить при последующих STOP_END - бага нет. 
 
 		switch (lastJsonMessage.type) {
 			case 'ROUTE':
@@ -65,7 +67,6 @@ function App() {
 				setLeft({
 					...left,
 					route: {
-						...left.route,
 						icon: VITE_ICONS_URL + icon,
 						color,
 						fontColor,
@@ -74,10 +75,10 @@ function App() {
 				});
 				break;
 			case 'SPEED':
-				setLeft({ ...left, speed: speed });
+				setLeft({ ...left, speed });
 				break;
 			case 'TEMPERATURE':
-				setLeft({ ...left, temperature: temperature });
+				setLeft({ ...left, temperature });
 				break;
 			case 'STOP_BEGIN':
 				setLeft({
@@ -118,7 +119,21 @@ function App() {
 					},
 				});
 				break;
-			//@TODO add pulkovo case
+			case 'PULKOVO':
+			{
+				const { subtype, duration, color, contents, src } = lastJsonMessage as TPulkovo;
+				setRight({
+					...right,
+					pulkovo: {
+						subtype,
+						duration,
+						color,
+						contents, 
+						src,
+					}
+				})
+			}
+			break;
 		}
 	}, [lastJsonMessage, readyState]);
 

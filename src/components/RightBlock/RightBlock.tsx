@@ -12,7 +12,7 @@ export const RightBlock = ({
 	sendMessage: SendJsonMessage;
 }) => {
 	const [isShown, setIsShown] = useState(true);
-	const { media } = useContext(RightContext);
+	const { media, pulkovo } = useContext(RightContext);
 
 	//@TODO: refactor flights, add duration for flights and reception
 
@@ -32,6 +32,6 @@ export const RightBlock = ({
 			<img className={styles.image} src={media.src} alt={media.label} />
 		</div>
 	) : (
-		<FlightTable flights={flightsToArrive} type="arrival" />
+		<FlightTable flights={flightsToArrive} type={pulkovo.subtype} />
 	);
 };
