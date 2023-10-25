@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { TFullStop, TPlayImage } from '../types';
+import { TFullStop, TPlayMedia } from '../types';
 
 export type TContextStop = TFullStop & { time: number };
 
@@ -18,12 +18,13 @@ export type TLeftContext = {
 		name: string;
 	};
 	speed: number;
+	temperature: number;
 	currStop: TFullStop | undefined;
 	stops: TContextStop[];
 };
 
 export type TRightContext = {
-	image: TPlayImage;
+	media: TPlayMedia;
 };
 
 export const LeftInitState = {
@@ -34,12 +35,13 @@ export const LeftInitState = {
 		name: '',
 	},
 	speed: 0,
+	temperature: 0,
 	currStop: undefined,
 	stops: [],
 };
 
 export const RightInitState = {
-	image: {
+	media: {
 		src: '',
 		label: '',
 		length: 0,

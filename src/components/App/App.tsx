@@ -4,11 +4,12 @@ import { Stops } from '../Stops/Stops';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {
 	TFullStop,
-	TPlayImage,
+	TPlayMedia,
 	TRoute,
 	TSpeed,
 	TStopStart,
 	TStopTimes,
+	TTemp,
 	TWsMessage,
 } from '../../types';
 import {
@@ -33,18 +34,19 @@ function App() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	const { lastJsonMessage, readyState } = useWebSocket<TWsMessage>(socketUrl, {
-		onError: () => {
-			setError(true);
-			setIsLoading(false);
-		},
-		onClose: () => {
-			console.log('Connection closed');
-		},
-		onOpen: () => {
-			setIsLoading(false);
-		},
-	});
+	const { lastJsonMessage, readyState, sendJsonMessage } =
+		useWebSocket<TWsMessage>(socketUrl, {
+			onError: () => {
+				setError(true);
+				setIsLoading(false);
+			},
+			onClose: () => {
+				console.log('Connection closed');
+			},
+			onOpen: () => {
+				setIsLoading(false);
+			},
+		});
 
 	useEffect(() => {
 		if (readyState === ReadyState.CONNECTING) setIsLoading(true);
@@ -52,7 +54,8 @@ function App() {
 		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute;
 		const { index } = lastJsonMessage as TStopStart;
 		const { speed } = lastJsonMessage as TSpeed;
-		const { src, label, length } = lastJsonMessage as TPlayImage;
+		const { temperature } = lastJsonMessage as TTemp;
+		const { src, label, length } = lastJsonMessage as TPlayMedia;
 
 		//@TODO fix route title & icon
 
@@ -73,8 +76,14 @@ function App() {
 			case 'SPEED':
 				setLeft({ ...left, speed: speed });
 				break;
+			case 'TEMPERATURE':
+				setLeft({ ...left, temperature: temperature });
+				break;
 			case 'STOP_BEGIN':
-				setLeft({ ...left, currStop: left.stops?.find(el => el.index === index)});
+				setLeft({
+					...left,
+					currStop: left.stops?.find((el) => el.index === index),
+				});
 				break;
 			case 'STOP_END':
 				setLeft({ ...left, currStop: undefined });
@@ -99,16 +108,17 @@ function App() {
 					});
 				}
 				break;
-			case 'PLAY_IMAGE':
+			case 'PLAY_IMAGE' && 'PLAY_VIDEO':
 				setRight({
 					...right,
-					image: {
+					media: {
 						src: VITE_ICONS_URL + src,
 						label,
 						length,
 					},
 				});
 				break;
+			//@TODO add pulkovo case
 		}
 	}, [lastJsonMessage, readyState]);
 
@@ -126,7 +136,7 @@ function App() {
 						<Stops />
 					</LeftContext.Provider>
 					<RightContext.Provider value={right}>
-						<RightBlock />
+						<RightBlock sendMessage={sendJsonMessage} />
 					</RightContext.Provider>
 				</>
 			)}

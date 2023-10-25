@@ -43,10 +43,14 @@ export type TStopStart = {
 	index: number;
 };
 
-export type TPlayImage = {
+export type TPlayMedia = {
 	src: string;
 	label: string;
 	length: number;
+};
+
+export type TTemp = {
+	temperature: number;
 };
 
 export type TWsMessage = (
@@ -54,7 +58,8 @@ export type TWsMessage = (
 	| TSpeed
 	| TRoute
 	| TStopStart
-	| TPlayImage
+	| TPlayMedia
+	| TTemp
 ) & {
 	type: string;
 };

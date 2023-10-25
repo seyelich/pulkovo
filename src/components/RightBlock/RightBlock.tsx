@@ -4,38 +4,34 @@ import { Reception } from '../Reception/Reception';
 import { flightsToArrive } from '../../utils/data';
 import { RightContext } from '../../utils/store';
 import styles from './RightBlock.module.css';
+import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
 
-export const RightBlock = () => {
-	const [stage, setStage] = useState(0);
-	const { image } = useContext(RightContext);
+export const RightBlock = ({
+	sendMessage,
+}: {
+	sendMessage: SendJsonMessage;
+}) => {
+	const [isShown, setIsShown] = useState(true);
+	const { media } = useContext(RightContext);
+
+	//@TODO: refactor flights, add duration for flights and reception
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			stage < 3 && setStage((stage) => stage + 1);
-			stage === 3 && setStage(0);
-		}, 10000);
-		return () => clearInterval(interval);
-	}, [stage]);
+		const timeout = setTimeout(() => {
+			setIsShown(false);
+			sendMessage({
+				type: 'COMPLETE',
+				label: media.label,
+			});
+		}, media.length * 1000);
+		return () => clearTimeout(timeout);
+	}, []);
 
-	//@TODO: add duration of displaying the image
-
-	const setRightBlock = () => {
-		switch (stage) {
-			case 0:
-				return (
-					<div className={styles.imageContainer}>
-						<img src={image.src} alt={image.label} />
-					</div>
-				);
-			case 1:
-				return <FlightTable flights={flightsToArrive} type="arrival" />;
-			case 2:
-				return <FlightTable flights={flightsToArrive} type="departure" />;
-			case 3:
-				return <Reception />;
-			default:
-				break;
-		}
-	};
-	return setRightBlock();
+	return isShown ? (
+		<div className={styles.imageContainer}>
+			<img className={styles.image} src={media.src} alt={media.label} />
+		</div>
+	) : (
+		<FlightTable flights={flightsToArrive} type="arrival" />
+	);
 };

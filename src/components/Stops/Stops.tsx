@@ -7,8 +7,9 @@ import styles from './Stops.module.css';
 import { LeftContext } from '../../utils/store';
 
 export const Stops = () => {
-	const { route, speed, stops, currStop } = useContext(LeftContext);
-	const [ lineHeight, setLineHeight ] = useState(0);
+	const { route, speed, stops, currStop, temperature } =
+		useContext(LeftContext);
+	const [lineHeight, setLineHeight] = useState(0);
 	const index = stops.length >= 4 ? 0 : stops.length;
 	const transfers = currStop?.transfers;
 	const listRef = useRef<HTMLUListElement>(null);
@@ -19,8 +20,8 @@ export const Stops = () => {
 
 	useEffect(() => {
 		const h = listHeight && listElHeight && listHeight - listElHeight * index;
-		setLineHeight(lineHeight => h? h : lineHeight);
-	}, [index, listHeight, listElHeight])
+		setLineHeight((lineHeight) => (h ? h : lineHeight));
+	}, [index, listHeight, listElHeight]);
 
 	//@TODO: fix bug when the last stop left && add POI condition
 
@@ -65,7 +66,7 @@ export const Stops = () => {
 				</>
 			}
 			<div className={styles.shadow}>
-				<Footer speed={speed} />
+				<Footer speed={speed} temperature={temperature} />
 			</div>
 		</div>
 	);
