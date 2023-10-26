@@ -70,7 +70,7 @@ function App() {
 						icon: VITE_ICONS_URL + icon,
 						color,
 						fontColor,
-						name: stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus,
+						name: stops.length !== 0 ? stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus : '',
 					},
 				});
 				break;
@@ -109,9 +109,10 @@ function App() {
 					});
 				}
 				break;
-			case 'PLAY_IMAGE' && 'PLAY_VIDEO':
+			case 'PLAY_IMAGE' || 'PLAY_VIDEO':
 				setRight({
 					...right,
+					type: 'media',
 					media: {
 						src: VITE_ICONS_URL + src,
 						label,
@@ -124,12 +125,13 @@ function App() {
 				const { subtype, duration, color, contents, src } = lastJsonMessage as TPulkovo;
 				setRight({
 					...right,
+					type: 'pulkovo',
 					pulkovo: {
 						subtype,
 						duration,
 						color,
 						contents, 
-						src,
+						src: VITE_ICONS_URL + src,
 					}
 				})
 			}

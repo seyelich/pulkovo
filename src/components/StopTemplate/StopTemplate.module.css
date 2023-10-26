@@ -28,7 +28,7 @@
 	line-height: 32px;
 }
 
-.name_en {
+.nameEng {
 	font-size: 24px;
 	font-weight: 500;
 	line-height: 24px;
@@ -40,4 +40,20 @@
 	font-weight: 500;
 	line-height: 18px;
 	margin-top: 16px;
+}
+
+@media screen and (min-width: 2782px) {
+	.stop {
+		height: 130px;
+	}
+
+	.name {
+		font-size: 48px;
+		line-height: 48px;
+	}
+
+	.nameEng {
+		font-size: 32px;
+		line-height: 32px;
+	}
 }

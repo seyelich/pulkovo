@@ -2,7 +2,6 @@
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	position: relative;
-	/* height: 100%; */
 }
 
 .stops {

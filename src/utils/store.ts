@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { TFullStop, TPlayMedia, TPulkovo } from '../types';
-import { pulkovoSubtypes } from './data';
+import { pulkovoSubtypes, rightContentTypes } from './constants';
 
 export type TContextStop = TFullStop & { time: number };
 
@@ -27,6 +27,7 @@ export type TLeftContext = {
 export type TRightContext = {
 	media: TPlayMedia;
 	pulkovo: TPulkovo;
+	type: 'media' | 'pulkovo',
 };
 
 export const LeftInitState = {
@@ -54,7 +55,8 @@ export const RightInitState = {
 		color: '',
 		contents: [],
 		src: '',
-	}
+	}, 
+	type: rightContentTypes.media,
 };
 
 export const LeftContext = createContext<TLeftContext>(LeftInitState);

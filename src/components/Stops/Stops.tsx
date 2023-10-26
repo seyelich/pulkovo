@@ -12,25 +12,28 @@ export const Stops = () => {
 	const [lineHeight, setLineHeight] = useState(0);
 	const index = stops.length >= 4 ? 0 : stops.length;
 	const transfers = currStop?.transfers;
+	const poi = currStop?.poi;
 	const listRef = useRef<HTMLUListElement>(null);
-	const listElRef = useRef<HTMLLIElement>(null);
 	const listHeight = listRef?.current?.clientHeight;
-	const listElHeight = listElRef?.current?.clientHeight;
-	// console.log(listHeight, listElHeight);
+	const listElHeight = listRef?.current?.querySelector('li')?.clientHeight;
 
 	useEffect(() => {
-		const h = listHeight && listElHeight && listHeight - listElHeight * index;
-		setLineHeight((lineHeight) => (h ? h : lineHeight));
+		if (stops.length >= 4 && listHeight) {
+			setLineHeight(listHeight)
+		}
+		else if (stops.length < 4 && listElHeight) {
+			setLineHeight(listElHeight * (index - (currStop ? 1.5 : 0.5)) + 24 * (index - 1))
+		} else if (stops.length === 1 && currStop) {
+			setLineHeight(0)
+		}
 	}, [index, listHeight, listElHeight]);
-
-	//@TODO: fix bug when the last stop left && add POI condition
 
 	return (
 		<div className={styles.leftBlock}>
 			<Header el={currStop ? currStop : route} />
 			{
 				<>
-					{currStop && transfers?.length !== 0 ? (
+					{currStop && (transfers || poi)?.length !== 0 ? ( // неизвестна длительность показа с POI и transfers
 						<Routes
 							transfers={transfers!}
 							isLast={currStop?.index === stops.length - 1}
@@ -47,17 +50,16 @@ export const Stops = () => {
 							>
 								<rect width="2" height={lineHeight} fill="#D9D9D9" />
 							</svg>
-							{index === stops.length - 1 && !currStop ? (
+							{(index === stops.length - 1 && !currStop) || stops.length === 1 && currStop ? (
 								<p className={styles.lastStop}>Конечная</p>
 							) : (
 								stops
-									.slice(currStop ? 1 : 0, 4)
+									.slice(currStop ? 1 : 0, currStop ? 5 : 4)
 									.map((el, i) => (
 										<StopTemplate
 											key={i}
 											stop={el}
 											isLast={i === stops.length - 1}
-											ref={listElRef}
 										/>
 									))
 							)}

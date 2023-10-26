@@ -1,7 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { FlightTable } from '../FlightsTable/FlightsTable';
-import { Reception } from '../Reception/Reception';
-import { flightsToArrive } from '../../utils/data';
 import { RightContext } from '../../utils/store';
 import styles from './RightBlock.module.css';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
@@ -11,27 +9,30 @@ export const RightBlock = ({
 }: {
 	sendMessage: SendJsonMessage;
 }) => {
-	const [isShown, setIsShown] = useState(true);
-	const { media, pulkovo } = useContext(RightContext);
+	const { media, pulkovo, type } = useContext(RightContext);
 
-	//@TODO: refactor flights, add duration for flights and reception
+	const timer = (label: string, duration: number) => setTimeout(() => {
+		sendMessage({
+			type: 'COMPLETE',
+			label: label,
+		});
+		console.log('Message is sent');
+	}, duration * 1000);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setIsShown(false);
-			sendMessage({
-				type: 'COMPLETE',
-				label: media.label,
-			});
-		}, media.length * 1000);
-		return () => clearTimeout(timeout);
-	}, []);
+		const contentTimer = type === 'pulkovo' ? timer(pulkovo.subtype, pulkovo.duration) : timer(media.label, media.length);
+		return () => clearTimeout(contentTimer);
+	}, [pulkovo, media, type]);
 
-	return isShown ? (
+	return type === 'media' ? (
 		<div className={styles.imageContainer}>
 			<img className={styles.image} src={media.src} alt={media.label} />
 		</div>
 	) : (
-		<FlightTable flights={flightsToArrive} type={pulkovo.subtype} />
+		pulkovo.subtype === 'ARRIVAL' || pulkovo.subtype === 'DEPARTURE' ? 
+		<FlightTable flights={pulkovo.contents!} type={pulkovo.subtype} />
+		: <div className={styles.imageContainer}>
+				<img className={styles.image} src={pulkovo.src} alt={pulkovo.subtype} />
+			</div>
 	);
 };
