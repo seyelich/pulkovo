@@ -5,14 +5,12 @@ import { Routes } from '../Routes/Routes';
 import { StopTemplate } from '../StopTemplate/StopTemplate';
 import styles from './Stops.module.css';
 import { LeftContext } from '../../utils/store';
-import {
-  CSSTransition, SwitchTransition,
-} from 'react-transition-group';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 export const Stops = () => {
 	const { route, speed, stops, currStop, temperature } =
 		useContext(LeftContext);
-	
+
 	const [lineHeight, setLineHeight] = useState(0);
 	const index = stops.length >= 4 ? 0 : stops.length;
 	const transfers = currStop?.transfers;
@@ -24,25 +22,26 @@ export const Stops = () => {
 
 	useEffect(() => {
 		if (stops.length >= 4 && listHeight) {
-			setLineHeight(listHeight)
-		}
-		else if (stops.length < 4 && listElHeight) {
-			setLineHeight(listElHeight * (index - (currStop ? 1.5 : 0.5)) + 24 * (index - 1))
+			setLineHeight(listHeight);
+		} else if (stops.length < 4 && listElHeight) {
+			setLineHeight(
+				listElHeight * (index - (currStop ? 1.5 : 0.5)) + 24 * (index - 1)
+			);
 		} else if (stops.length === 1 && currStop) {
-			setLineHeight(0)
+			setLineHeight(0);
 		}
 	}, [index, listHeight, listElHeight]);
 
 	return (
-		<SwitchTransition mode='out-in' >
-			<CSSTransition 
+		<SwitchTransition mode="out-in">
+			<CSSTransition
 				classNames={{
 					enter: styles.leftBlockEnter,
 					enterActive: styles.leftBlockEnterActive,
 					exit: styles.leftBlockExit,
 					exitActive: styles.leftBlockExitActive,
-				}} 
-				nodeRef={nodeRef} 
+				}}
+				nodeRef={nodeRef}
 				timeout={1000}
 				key={!!currStop}
 			>
@@ -67,7 +66,8 @@ export const Stops = () => {
 									>
 										<rect width="2" height={lineHeight} fill="#D9D9D9" />
 									</svg>
-									{(index === stops.length - 1 && !currStop) || stops.length === 1 && currStop ? (
+									{(index === stops.length - 1 && !currStop) ||
+									(stops.length === 1 && currStop) ? (
 										<p className={styles.lastStop}>Конечная</p>
 									) : (
 										stops

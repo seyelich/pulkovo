@@ -31,10 +31,12 @@ export const StopTemplate = ({ stop, isLast, isFirst }: TStopTemplate) => {
 					strokeWidth="4"
 				/>
 			</svg>
-			<div className={`${styles.nameContainer} ${isFirst && styles.nameContainerFirst}`}>
-				<p className={styles.name}>
-					{stop.nameRus}
-				</p>
+			<div
+				className={`${styles.nameContainer} ${
+					isFirst && styles.nameContainerFirst
+				}`}
+			>
+				<p className={styles.name}>{stop.nameRus}</p>
 				<p className={styles.nameEng}>{stop.nameEng}</p>
 				{isLast && <p className={styles.lastStop}>Конечная</p>}
 			</div>

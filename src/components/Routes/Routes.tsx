@@ -36,7 +36,11 @@ export const Routes = ({
 				{transfers.map((el, iu) => {
 					return (
 						<div className={styles.row} key={iu}>
-							<img className={styles.icon} src={VITE_ICONS_URL + el.icons[0]} alt="Тип ТС" />
+							<img
+								className={styles.icon}
+								src={VITE_ICONS_URL + el.icons[0]}
+								alt="Тип ТС"
+							/>
 							<ul
 								className={`${styles.list} ${el.nameRus && styles.listMetro}`}
 							>

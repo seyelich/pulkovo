@@ -59,20 +59,26 @@ function App() {
 			},
 		});
 
-	const leftContext = useMemo(() => ({
-		route,
-		stops: appStops,
-		currStop,
-		speed: appSpeed,
-		temperature: appTemperature,
-	}), [route, appStops, currStop, appSpeed, appTemperature]);
+	const leftContext = useMemo(
+		() => ({
+			route,
+			stops: appStops,
+			currStop,
+			speed: appSpeed,
+			temperature: appTemperature,
+		}),
+		[route, appStops, currStop, appSpeed, appTemperature]
+	);
 
-	const rightContext = useMemo(() => ({
-		media,
-		pulkovo,
-		type,
-	}), [media, pulkovo, type]);
-	
+	const rightContext = useMemo(
+		() => ({
+			media,
+			pulkovo,
+			type,
+		}),
+		[media, pulkovo, type]
+	);
+
 	useEffect(() => {
 		if (readyState === ReadyState.CONNECTING) setIsLoading(true);
 		if (!lastJsonMessage) return;
@@ -86,11 +92,14 @@ function App() {
 			case 'ROUTE':
 				setAllStops(stops);
 				setRoute({
-						icon: VITE_ICONS_URL + icon,
-						color,
-						fontColor,
-						name: stops.length !== 0 ? stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus : '',
-					});
+					icon: VITE_ICONS_URL + icon,
+					color,
+					fontColor,
+					name:
+						stops.length !== 0
+							? stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus
+							: '',
+				});
 				break;
 			case 'SPEED':
 				setAppSpeed(speed);
@@ -140,18 +149,19 @@ function App() {
 				});
 				break;
 			case 'PULKOVO':
-			{
-				const { subtype, duration, color, contents, src } = lastJsonMessage as TPulkovo;
-				setType('pulkovo');
-				setPulkovo({
-					subtype,
-					duration,
-					color,
-					contents, 
-					src: VITE_ICONS_URL + src,
-				})
-			}
-			break;
+				{
+					const { subtype, duration, color, contents, src } =
+						lastJsonMessage as TPulkovo;
+					setType('pulkovo');
+					setPulkovo({
+						subtype,
+						duration,
+						color,
+						contents,
+						src: VITE_ICONS_URL + src,
+					});
+				}
+				break;
 		}
 	}, [lastJsonMessage]);
 
