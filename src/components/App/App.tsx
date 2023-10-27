@@ -1,82 +1,108 @@
 import styles from './App.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Stops } from '../Stops/Stops';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {
 	TFullStop,
-	TPlayImage,
+	TMedia,
+	TPulkovo,
 	TRoute,
 	TSpeed,
 	TStopStart,
 	TStopTimes,
+	TTemp,
 	TWsMessage,
 } from '../../types';
 import {
 	LeftContext,
-	LeftInitState,
 	RightContext,
-	RightInitState,
-	TLeftContext,
-	TRightContext,
+	TContextStop,
+	TContextMedia,
+	TContextRoute,
+	RouteInitState,
+	MediaInitState,
+	PulkovoInitState,
 } from '../../utils/store';
 import { RightBlock } from '../RightBlock/RightBlock';
 import { socketUrl } from '../../utils/constants';
 
 const { VITE_ICONS_URL } = import.meta.env;
 
-console.log(VITE_ICONS_URL);
-
 function App() {
 	const [allStops, setAllStops] = useState<TFullStop[]>([]);
-	const [left, setLeft] = useState<TLeftContext>(LeftInitState);
-	const [right, setRight] = useState<TRightContext>(RightInitState);
+
+	const [route, setRoute] = useState<TContextRoute>(RouteInitState);
+	const [appStops, setAppStops] = useState<TContextStop[]>([]);
+	const [currStop, setCurrStop] = useState<TFullStop | undefined>();
+	const [appSpeed, setAppSpeed] = useState<number>(0);
+	const [appTemperature, setAppTemperature] = useState<number>(0);
+
+	const [media, setMedia] = useState<TContextMedia>(MediaInitState);
+	const [pulkovo, setPulkovo] = useState<TPulkovo>(PulkovoInitState);
+	const [type, setType] = useState<'media' | 'pulkovo'>('media');
+
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	const { lastJsonMessage, readyState } = useWebSocket<TWsMessage>(socketUrl, {
-		onError: () => {
-			setError(true);
-			setIsLoading(false);
-		},
-		onClose: () => {
-			console.log('Connection closed');
-		},
-		onOpen: () => {
-			setIsLoading(false);
-		},
-	});
+	const { lastJsonMessage, readyState, sendJsonMessage } =
+		useWebSocket<TWsMessage>(socketUrl, {
+			onError: () => {
+				setError(true);
+				setIsLoading(false);
+			},
+			onClose: () => {
+				console.log('Connection closed');
+				setIsLoading(false);
+			},
+			onOpen: () => {
+				setIsLoading(false);
+			},
+		});
 
+	const leftContext = useMemo(() => ({
+		route,
+		stops: appStops,
+		currStop,
+		speed: appSpeed,
+		temperature: appTemperature,
+	}), [route, appStops, currStop, appSpeed, appTemperature]);
+
+	const rightContext = useMemo(() => ({
+		media,
+		pulkovo,
+		type,
+	}), [media, pulkovo, type]);
+	
 	useEffect(() => {
 		if (readyState === ReadyState.CONNECTING) setIsLoading(true);
 		if (!lastJsonMessage) return;
 		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute;
 		const { index } = lastJsonMessage as TStopStart;
 		const { speed } = lastJsonMessage as TSpeed;
-		const { src, label, length } = lastJsonMessage as TPlayImage;
-
-		//@TODO fix route title & icon
+		const { temperature } = lastJsonMessage as TTemp;
+		const { src, label, length } = lastJsonMessage as TMedia;
 
 		switch (lastJsonMessage.type) {
 			case 'ROUTE':
 				setAllStops(stops);
-				setLeft({
-					...left,
-					route: {
+				setRoute({
 						icon: VITE_ICONS_URL + icon,
 						color,
 						fontColor,
-						name: stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus,
-					},
-				});
+						name: stops.length !== 0 ? stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus : '',
+					});
 				break;
 			case 'SPEED':
-				setLeft({ ...left, speed: speed });
+				setAppSpeed(speed);
+				break;
+			case 'TEMPERATURE':
+				setAppTemperature(temperature);
 				break;
 			case 'STOP_BEGIN':
-				setLeft({ ...left, currStop: left.stops?.find(el => el.index === index)});
+				setCurrStop(appStops?.find((el) => el.index === index));
 				break;
 			case 'STOP_END':
-				setLeft({ ...left, currStop: undefined });
+				setCurrStop(undefined);
 				break;
 			case 'STOP_TIMES':
 				{
@@ -92,24 +118,42 @@ function App() {
 							});
 					}
 
-					setLeft({
-						...left,
-						stops: stops,
-					});
+					setAppStops(stops);
 				}
 				break;
 			case 'PLAY_IMAGE':
-				setRight({
-					...right,
-					image: {
-						src: VITE_ICONS_URL + src,
-						label,
-						length,
-					},
+				setType('media');
+				setMedia({
+					src: VITE_ICONS_URL + src,
+					label,
+					length,
+					type: 'img',
 				});
 				break;
+			case 'PLAY_VIDEO':
+				setType('media');
+				setMedia({
+					src: VITE_ICONS_URL + src,
+					label,
+					length,
+					type: 'video',
+				});
+				break;
+			case 'PULKOVO':
+			{
+				const { subtype, duration, color, contents, src } = lastJsonMessage as TPulkovo;
+				setType('pulkovo');
+				setPulkovo({
+					subtype,
+					duration,
+					color,
+					contents, 
+					src: VITE_ICONS_URL + src,
+				})
+			}
+			break;
 		}
-	}, [lastJsonMessage, readyState]);
+	}, [lastJsonMessage]);
 
 	return (
 		<div
@@ -121,11 +165,11 @@ function App() {
 				<p className={styles.error}>Произошла ошибка</p>
 			) : (
 				<>
-					<LeftContext.Provider value={left}>
+					<LeftContext.Provider value={leftContext}>
 						<Stops />
 					</LeftContext.Provider>
-					<RightContext.Provider value={right}>
-						<RightBlock />
+					<RightContext.Provider value={rightContext}>
+						<RightBlock sendMessage={sendJsonMessage} />
 					</RightContext.Provider>
 				</>
 			)}

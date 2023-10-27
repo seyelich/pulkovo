@@ -1,15 +1,15 @@
 import { TContextStop } from '../../utils/store';
-import { LegacyRef, forwardRef } from 'react';
 import styles from './StopTemplate.module.css';
 
 type TStopTemplate = {
 	stop: TContextStop;
 	isLast: boolean;
+	isFirst: boolean;
 };
 
-export const StopTemplate = forwardRef(({ stop, isLast }: TStopTemplate, ref: LegacyRef<HTMLLIElement>) => {
+export const StopTemplate = ({ stop, isLast, isFirst }: TStopTemplate) => {
 	return (
-		<li className={styles.stop} ref={ref}>
+		<li className={styles.stop}>
 			<div className={styles.timeContainer}>
 				<p>{stop.time}</p>
 				<p className={styles.minute}>мин</p>
@@ -31,13 +31,13 @@ export const StopTemplate = forwardRef(({ stop, isLast }: TStopTemplate, ref: Le
 					strokeWidth="4"
 				/>
 			</svg>
-			<div>
+			<div className={`${styles.nameContainer} ${isFirst && styles.nameContainerFirst}`}>
 				<p className={styles.name}>
 					{stop.nameRus}
 				</p>
-				<p className={styles.name_en}>{stop.nameEng}</p>
+				<p className={styles.nameEng}>{stop.nameEng}</p>
 				{isLast && <p className={styles.lastStop}>Конечная</p>}
 			</div>
 		</li>
 	);
-});
+};

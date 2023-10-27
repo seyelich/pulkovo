@@ -1,5 +1,34 @@
+.rightBlock {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.rightBlockEnter {
+	opacity: 0;
+}
+.rightBlockExit {
+	opacity: 1;
+}
+.rightBlockEnterActive {
+	opacity: 1;
+}
+.rightBlockExitActive {
+	opacity: 0;
+}
+.rightBlockEnterActive,
+.rightBlockExitActive {
+	transition: opacity 1000ms;
+}
+
 .imageContainer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+}
+
+.image {
+	width: 100%;
+	object-fit: contain;
 }

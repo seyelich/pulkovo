@@ -35,10 +35,9 @@ export const Routes = ({
 			<div className={styles.iconsContainer}>
 				{transfers.map((el, iu) => {
 					return (
-						<div className={styles.row}>
+						<div className={styles.row} key={iu}>
 							<img className={styles.icon} src={VITE_ICONS_URL + el.icons[0]} alt="Тип ТС" />
 							<ul
-								key={iu}
 								className={`${styles.list} ${el.nameRus && styles.listMetro}`}
 							>
 								{el.icons.slice(1).map((icon, il) => (

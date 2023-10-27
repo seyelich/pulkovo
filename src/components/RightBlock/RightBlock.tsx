@@ -1,39 +1,64 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { FlightTable } from '../FlightsTable/FlightsTable';
-import { Reception } from '../Reception/Reception';
-import { flightsToArrive } from '../../utils/data';
 import { RightContext } from '../../utils/store';
 import styles from './RightBlock.module.css';
+import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
-export const RightBlock = () => {
-	const [stage, setStage] = useState(0);
-	const { image } = useContext(RightContext);
+export const RightBlock = ({
+	sendMessage,
+}: {
+	sendMessage: SendJsonMessage;
+}) => {
+	const { media, pulkovo, type } = useContext(RightContext);
+	const nodeRef = useRef<HTMLDivElement>(null);
+
+	const timer = (label: string, duration: number) => setTimeout(() => {
+		sendMessage({
+			type: 'COMPLETE',
+			label: label,
+		});
+		console.log('Message is sent');
+	}, duration * 1000);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			stage < 3 && setStage((stage) => stage + 1);
-			stage === 3 && setStage(0);
-		}, 10000);
-		return () => clearInterval(interval);
-	}, [stage]);
+		const contentTimer = type === 'pulkovo' ? timer(pulkovo.subtype, pulkovo.duration) : timer(media.label, media.length);
+		return () => clearTimeout(contentTimer);
+	}, [pulkovo, media, type]);
 
-	const setRightBlock = () => {
-		switch (stage) {
-			case 0:
-				return (
-					<div className={styles.imageContainer}>
-						<img src={image.src} alt={image.label} />
-					</div>
-				);
-			case 1:
-				return <FlightTable flights={flightsToArrive} type="arrival" />;
-			case 2:
-				return <FlightTable flights={flightsToArrive} type="departure" />;
-			case 3:
-				return <Reception />;
-			default:
-				break;
-		}
-	};
-	return setRightBlock();
+	return (
+		<SwitchTransition mode='out-in'>
+			<CSSTransition 
+				classNames={{
+					enter: styles.rightBlockEnter,
+					enterActive: styles.rightBlockEnterActive,
+					exit: styles.rightBlockExit,
+					exitActive: styles.rightBlockExitActive,
+				}} 
+				nodeRef={nodeRef} 
+				timeout={1000}
+				key={type && pulkovo.subtype && media.type}
+			>
+				<div className={styles.rightBlock} ref={nodeRef}>
+					{
+						type === 'media' ? (
+							<div className={styles.imageContainer}>
+								{
+									media.type === 'img' ?
+									<img className={styles.image} src={media.src} alt={media.label} /> :
+									<video className={styles.image} autoPlay={true} muted src={media.src} />
+								}
+							</div>
+						) : (
+							pulkovo.subtype === 'ARRIVAL' || pulkovo.subtype === 'DEPARTURE' ? 
+							<FlightTable flights={pulkovo.contents!} type={pulkovo.subtype} />
+							: <div className={styles.imageContainer}>
+									<img className={styles.image} src={pulkovo.src} alt={pulkovo.subtype} />
+								</div>
+						)
+					}
+				</div>
+			</CSSTransition>
+		</SwitchTransition>
+	)
 };

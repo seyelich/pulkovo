@@ -1,25 +1,25 @@
-import { TFlight } from '../../utils/data';
 import { FlightLine } from '../FlightLine/FlightLine';
 import arrival from '../../assets/arrival.svg';
 import departure from '../../assets/departure.svg';
 import styles from './FlightsTable.module.css';
+import { TFlight, TPulkovoSubtype } from '../../types';
 
 export const FlightTable = ({
 	flights,
 	type,
 }: {
 	flights: TFlight[];
-	type: 'arrival' | 'departure';
+	type: TPulkovoSubtype;
 }) => {
 	return (
 		<div className={styles.content}>
 			<div className={styles.titleContainer}>
 				<img
-					src={type === 'arrival' ? arrival : departure}
-					alt={type === 'arrival' ? 'Прилёты' : 'Вылеты'}
+					src={type === 'ARRIVAL' ? arrival : departure}
+					alt={type === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
 				/>
 				<p className={styles.title}>
-					{type === 'arrival' ? 'Прилёты' : 'Вылеты'}
+					{type === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
 				</p>
 			</div>
 			<table className={styles.table}>

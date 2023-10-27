@@ -30,3 +30,20 @@
 	font-weight: 500;
 	line-height: 42px;
 }
+
+@media screen and (min-width: 2782px) {
+	.title {
+		font-size: 52px;
+		line-height: 52px;
+	}
+	
+	.titleOnGoing {
+		font-size: 42px;
+		line-height: 42px;
+	}
+	
+	.titleEng {
+		font-size: 42px;
+		line-height: 42px;
+	}
+}

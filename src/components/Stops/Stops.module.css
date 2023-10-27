@@ -2,7 +2,23 @@
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	position: relative;
-	/* height: 100%; */
+}
+
+.leftBlockEnter {
+	opacity: 0;
+}
+.leftBlockExit {
+	opacity: 1;
+}
+.leftBlockEnterActive {
+	opacity: 1;
+}
+.leftBlockExitActive {
+	opacity: 0;
+}
+.leftBlockEnterActive,
+.leftBlockExitActive {
+	transition: opacity 1000ms;
 }
 
 .stops {
