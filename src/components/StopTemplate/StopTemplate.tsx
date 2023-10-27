@@ -4,9 +4,10 @@ import styles from './StopTemplate.module.css';
 type TStopTemplate = {
 	stop: TContextStop;
 	isLast: boolean;
+	isFirst: boolean;
 };
 
-export const StopTemplate = ({ stop, isLast }: TStopTemplate) => {
+export const StopTemplate = ({ stop, isLast, isFirst }: TStopTemplate) => {
 	return (
 		<li className={styles.stop}>
 			<div className={styles.timeContainer}>
@@ -30,7 +31,7 @@ export const StopTemplate = ({ stop, isLast }: TStopTemplate) => {
 					strokeWidth="4"
 				/>
 			</svg>
-			<div>
+			<div className={`${styles.nameContainer} ${isFirst && styles.nameContainerFirst}`}>
 				<p className={styles.name}>
 					{stop.nameRus}
 				</p>

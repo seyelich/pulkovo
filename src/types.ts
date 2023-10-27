@@ -43,7 +43,7 @@ export type TStopStart = {
 	index: number;
 };
 
-export type TPlayMedia = {
+export type TMedia = {
 	src: string;
 	label: string;
 	length: number;
@@ -78,7 +78,7 @@ export type TWsMessage = (
 	| TSpeed
 	| TRoute
 	| TStopStart
-	| TPlayMedia
+	| TMedia
 	| TTemp
 	| TPulkovo
 ) & {

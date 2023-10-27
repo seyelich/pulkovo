@@ -3,7 +3,7 @@
 	flex-direction: column;
 	border-left: 2px solid rgba(51, 71, 67, 1);
 	width: 100%;
-	overflow: hidden;
+	overflow: clip;
 }
 
 .titleContainer {

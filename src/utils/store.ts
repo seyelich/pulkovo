@@ -1,23 +1,20 @@
 import { createContext } from 'react';
-import { TFullStop, TPlayMedia, TPulkovo } from '../types';
+import { TFullStop, TMedia, TPulkovo } from '../types';
 import { pulkovoSubtypes, rightContentTypes } from './constants';
 
 export type TContextStop = TFullStop & { time: number };
 
-export type TRoute = {
+export type TContextRoute = {
 	icon: string;
 	color: string;
 	fontColor: string;
 	name: string;
 };
 
+export type TContextMedia = TMedia & { type: string }
+
 export type TLeftContext = {
-	route: {
-		icon: string;
-		color: string;
-		fontColor: string;
-		name: string;
-	};
+	route: TContextRoute;
 	speed: number;
 	temperature: number;
 	currStop: TFullStop | undefined;
@@ -25,37 +22,44 @@ export type TLeftContext = {
 };
 
 export type TRightContext = {
-	media: TPlayMedia;
+	media: TContextMedia;
 	pulkovo: TPulkovo;
 	type: 'media' | 'pulkovo',
 };
 
+export const RouteInitState = {
+	icon: '',
+	color: '',
+	fontColor: '',
+	name: '',
+};
+
 export const LeftInitState = {
-	route: {
-		icon: '',
-		color: '',
-		fontColor: '',
-		name: '',
-	},
+	route: RouteInitState,
 	speed: 0,
 	temperature: 0,
 	currStop: undefined,
 	stops: [],
 };
 
+export const MediaInitState = {
+	src: '',
+	label: '',
+	length: 0,
+	type: '',
+};
+
+export const PulkovoInitState = {
+	subtype: pulkovoSubtypes.ARRIVAL,
+	duration: 0,
+	color: '',
+	contents: [],
+	src: '',
+}
+
 export const RightInitState = {
-	media: {
-		src: '',
-		label: '',
-		length: 0,
-	},
-	pulkovo: {
-		subtype: pulkovoSubtypes.ARRIVAL,
-		duration: 0,
-		color: '',
-		contents: [],
-		src: '',
-	}, 
+	media: MediaInitState,
+	pulkovo: PulkovoInitState, 
 	type: rightContentTypes.media,
 };
 

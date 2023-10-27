@@ -4,6 +4,23 @@
 	position: relative;
 }
 
+.leftBlockEnter {
+	opacity: 0;
+}
+.leftBlockExit {
+	opacity: 1;
+}
+.leftBlockEnterActive {
+	opacity: 1;
+}
+.leftBlockExitActive {
+	opacity: 0;
+}
+.leftBlockEnterActive,
+.leftBlockExitActive {
+	transition: opacity 1000ms;
+}
+
 .stops {
 	position: relative;
 	list-style-type: none;
