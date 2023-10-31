@@ -1,12 +1,9 @@
+import useLeftContext from '../../hooks/useLeftContext';
 import styles from './Footer.module.css';
 
-export const Footer = ({
-	speed,
-	temperature,
-}: {
-	speed: number;
-	temperature: number;
-}) => {
+export const Footer = () => {
+	const { speed, temperature } = useLeftContext();
+	
 	const getTime = () => {
 		const date = new Date();
 

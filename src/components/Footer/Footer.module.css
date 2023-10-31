@@ -1,5 +1,6 @@
 .footer {
-	max-width: 347px;
+	width: 347px;
+	justify-content: space-evenly;
 	height: min-content;
 	box-sizing: border-box;
 	padding: 4px 24px;

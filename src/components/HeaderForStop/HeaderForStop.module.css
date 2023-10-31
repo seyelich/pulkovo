@@ -1,34 +1,26 @@
 .header {
 	padding: 10px 32px;
 	box-sizing: border-box;
-	background-color: #b6e5ff;
-}
-
-.headerOnGoing {
-	padding: 7px 10px;
-	border-bottom: 2px solid #d9d9d9;
-	display: flex;
-	gap: 16px;
-	box-sizing: border-box;
+	height: 102px;
+	overflow: hidden;
 }
 
 .title {
 	font-size: 40px;
 	font-weight: 700;
 	line-height: 40px;
-}
-
-.titleOnGoing {
-	font-size: 28px;
-	font-weight: 700;
-	line-height: 42px;
-	color: #403939;
+	text-wrap: nowrap;
 }
 
 .titleEng {
 	font-size: 28px;
 	font-weight: 500;
 	line-height: 42px;
+	text-wrap: nowrap;
+}
+
+.runningLine {
+	animation: 5s linear infinite running line;
 }
 
 @media screen and (min-width: 2782px) {
@@ -37,13 +29,19 @@
 		line-height: 52px;
 	}
 	
-	.titleOnGoing {
-		font-size: 42px;
-		line-height: 42px;
-	}
-	
 	.titleEng {
 		font-size: 42px;
 		line-height: 42px;
+	}
+}
+
+/* change animation */
+
+@keyframes line {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(100%);
 	}
 }

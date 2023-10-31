@@ -1,0 +1,21 @@
+.header {
+	padding: 7px 10px;
+	border-bottom: 2px solid #d9d9d9;
+	display: flex;
+	gap: 16px;
+	box-sizing: border-box;
+	background-color: inherit;
+}
+
+.title {
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 42px;
+}
+
+@media screen and (min-width: 2782px) {
+	.title {
+		font-size: 42px;
+		line-height: 42px;
+	}
+}

@@ -1,16 +1,16 @@
-import { useEffect, useContext, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { FlightTable } from '../FlightsTable/FlightsTable';
-import { RightContext } from '../../utils/store';
 import styles from './RightBlock.module.css';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import useRightContext from '../../hooks/useRightContext';
 
 export const RightBlock = ({
 	sendMessage,
 }: {
 	sendMessage: SendJsonMessage;
 }) => {
-	const { media, pulkovo, type } = useContext(RightContext);
+	const { media, pulkovo, type } = useRightContext();
 	const nodeRef = useRef<HTMLDivElement>(null);
 
 	const timer = (label: string, duration: number) => setTimeout(() => {
@@ -51,7 +51,7 @@ export const RightBlock = ({
 							</div>
 						) : (
 							pulkovo.subtype === 'ARRIVAL' || pulkovo.subtype === 'DEPARTURE' ? 
-							<FlightTable flights={pulkovo.contents!} type={pulkovo.subtype} />
+							<FlightTable />
 							: <div className={styles.imageContainer}>
 									<img className={styles.image} src={pulkovo.src} alt={pulkovo.subtype} />
 								</div>

@@ -42,12 +42,10 @@ function App() {
 	const [type, setType] = useState<'media' | 'pulkovo'>('media');
 
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState(false);
 
 	const { lastJsonMessage, readyState, sendJsonMessage } =
 		useWebSocket<TWsMessage>(socketUrl, {
 			onError: () => {
-				setError(true);
 				setIsLoading(false);
 			},
 			onClose: () => {
@@ -55,8 +53,12 @@ function App() {
 				setIsLoading(false);
 			},
 			onOpen: () => {
+				console.log('Connection opened');
 				setIsLoading(false);
 			},
+			shouldReconnect: () => true,
+			reconnectAttempts: 10,
+			reconnectInterval: 3000,
 		});
 
 	const leftContext = useMemo(() => ({
@@ -157,12 +159,10 @@ function App() {
 
 	return (
 		<div
-			className={`${styles.app} ${(isLoading || error) && styles.appOnLoading}`}
+			className={`${styles.app} ${(isLoading) && styles.appOnLoading}`}
 		>
 			{isLoading ? (
 				<div className={styles.loader}></div>
-			) : error ? (
-				<p className={styles.error}>Произошла ошибка</p>
 			) : (
 				<>
 					<LeftContext.Provider value={leftContext}>

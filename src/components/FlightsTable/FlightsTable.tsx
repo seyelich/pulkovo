@@ -2,24 +2,20 @@ import { FlightLine } from '../FlightLine/FlightLine';
 import arrival from '../../assets/arrival.svg';
 import departure from '../../assets/departure.svg';
 import styles from './FlightsTable.module.css';
-import { TFlight, TPulkovoSubtype } from '../../types';
+import useRightContext from '../../hooks/useRightContext';
 
-export const FlightTable = ({
-	flights,
-	type,
-}: {
-	flights: TFlight[];
-	type: TPulkovoSubtype;
-}) => {
+export const FlightTable = () => {
+	const { contents, subtype } = useRightContext().pulkovo;
+
 	return (
 		<div className={styles.content}>
 			<div className={styles.titleContainer}>
 				<img
-					src={type === 'ARRIVAL' ? arrival : departure}
-					alt={type === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
+					src={subtype === 'ARRIVAL' ? arrival : departure}
+					alt={subtype === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
 				/>
 				<p className={styles.title}>
-					{type === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
+					{subtype === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
 				</p>
 			</div>
 			<table className={styles.table}>
@@ -34,7 +30,7 @@ export const FlightTable = ({
 					</tr>
 				</thead>
 				<tbody>
-					{flights.map((el, i) => (
+					{contents?.map((el, i) => (
 						<FlightLine flight={el} key={i} />
 					))}
 				</tbody>
