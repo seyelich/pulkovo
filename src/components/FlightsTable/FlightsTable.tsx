@@ -30,9 +30,7 @@ export const FlightTable = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{contents?.map((el, i) => (
-						<FlightLine flight={el} key={i} />
-					))}
+					{contents?.map((el, i) => <FlightLine flight={el} key={i} />)}
 				</tbody>
 			</table>
 		</div>

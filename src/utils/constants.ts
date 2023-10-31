@@ -6,16 +6,15 @@ export const pulkovoSubtypes = {
 	DEPARTURE: 'DEPARTURE',
 	COUNTERS: 'COUNTERS',
 } as {
-	ARRIVAL: 'ARRIVAL',
-	DEPARTURE: 'DEPARTURE',
-	COUNTERS: 'COUNTERS',
-}
+	ARRIVAL: 'ARRIVAL';
+	DEPARTURE: 'DEPARTURE';
+	COUNTERS: 'COUNTERS';
+};
 
 export const rightContentTypes = {
 	media: 'media',
-	pulkovo: 'pulkovo'
+	pulkovo: 'pulkovo',
 } as {
-	media: 'media',
-	pulkovo: 'pulkovo'
-}
-
+	media: 'media';
+	pulkovo: 'pulkovo';
+};

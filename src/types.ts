@@ -66,12 +66,12 @@ export type TFlight = {
 export type TPulkovoSubtype = 'DEPARTURE' | 'ARRIVAL' | 'COUNTERS';
 
 export type TPulkovo = {
-	subtype: TPulkovoSubtype,
-  duration: number,
-  color: string,
-  contents?: TFlight[];
+	subtype: TPulkovoSubtype;
+	duration: number;
+	color: string;
+	contents?: TFlight[];
 	src?: string;
-}
+};
 
 export type TWsMessage = (
 	| TStopTimes

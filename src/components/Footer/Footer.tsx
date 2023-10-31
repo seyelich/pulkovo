@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 
 export const Footer = () => {
 	const { speed, temperature } = useLeftContext();
-	
+
 	const getTime = () => {
 		const date = new Date();
 

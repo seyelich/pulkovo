@@ -11,7 +11,7 @@ export type TContextRoute = {
 	name: string;
 };
 
-export type TContextMedia = TMedia & { type: string }
+export type TContextMedia = TMedia & { type: string };
 
 export type TLeftContext = {
 	route: TContextRoute;
@@ -24,7 +24,7 @@ export type TLeftContext = {
 export type TRightContext = {
 	media: TContextMedia;
 	pulkovo: TPulkovo;
-	type: 'media' | 'pulkovo',
+	type: 'media' | 'pulkovo';
 };
 
 export const RouteInitState = {
@@ -55,11 +55,11 @@ export const PulkovoInitState = {
 	color: '',
 	contents: [],
 	src: '',
-}
+};
 
 export const RightInitState = {
 	media: MediaInitState,
-	pulkovo: PulkovoInitState, 
+	pulkovo: PulkovoInitState,
 	type: rightContentTypes.media,
 };
 
