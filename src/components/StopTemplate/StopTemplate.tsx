@@ -15,7 +15,7 @@ export const StopTemplate = ({
 	isFinal,
 	isFirst,
 }: TStopTemplate) => {
-	const { route } = useLeftContext();
+	const { route, stops, currStop } = useLeftContext();
 
 	return (
 		<li className={styles.stop}>
@@ -24,8 +24,11 @@ export const StopTemplate = ({
 				<p className={styles.minute}>мин</p>
 			</div>
 			<div
-				className={`${styles.circle} ${isLast && styles.circleWithLine} ${
-					isFinal && styles.circleWithLineFinal
+				className={`${styles.circle} ${
+					(isLast || isFinal) && styles.circleWithLine
+				} ${
+					((stops.length < 4 && isFinal) || !!currStop) &&
+					styles.circleWithLineFinal
 				}`}
 			>
 				<svg
@@ -55,7 +58,7 @@ export const StopTemplate = ({
 			>
 				<p className={styles.name}>{stop.nameRus}</p>
 				<p className={styles.nameEng}>{stop.nameEng}</p>
-				{isLast && <p className={styles.lastStop}>Конечная</p>}
+				{isFinal && <p className={styles.lastStop}>Конечная</p>}
 			</div>
 		</li>
 	);

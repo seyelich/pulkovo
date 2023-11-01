@@ -5,7 +5,6 @@ import useLeftContext from '../../hooks/useLeftContext';
 export const Stops = () => {
 	const { stops, currStop } = useLeftContext();
 	const index = stops.length >= 4 ? 0 : stops.length;
-	console.log(stops);
 
 	return (
 		<>
