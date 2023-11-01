@@ -1,12 +1,14 @@
 .footer {
 	width: 347px;
+	position: absolute;
+	bottom: 8px;
+	right: 24px;
 	justify-content: space-evenly;
 	height: min-content;
 	box-sizing: border-box;
 	padding: 4px 24px;
 	border-radius: 2px 2px 0px 0px;
-	border: 1px;
-	border-color: rgba(209, 209, 209, 1);
+	border: 1px solid rgba(209, 209, 209, 1);
 	display: flex;
 	gap: 20px;
 	color: rgba(62, 58, 107, 1);
@@ -14,6 +16,4 @@
 	line-height: 18px;
 	font-weight: 500;
 	background-color: rgba(252, 249, 249, 1);
-	align-self: flex-end;
-	margin-left: auto;
 }

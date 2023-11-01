@@ -34,9 +34,7 @@ export const LeftBlock = () => {
 					) : (
 						<Stops />
 					)}
-					<div className={styles.shadow}>
-						<Footer />
-					</div>
+					<Footer />
 				</div>
 			</CSSTransition>
 		</SwitchTransition>
