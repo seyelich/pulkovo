@@ -1,6 +1,6 @@
 import styles from './App.module.css';
 import { useEffect, useState, useMemo } from 'react';
-import { Stops } from '../Stops/Stops';
+import { LeftBlock } from '../LeftBlock/LeftBlock';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import {
 	TFullStop,
@@ -174,7 +174,7 @@ function App() {
 			) : (
 				<>
 					<LeftContext.Provider value={leftContext}>
-						<Stops />
+						<LeftBlock />
 					</LeftContext.Provider>
 					<RightContext.Provider value={rightContext}>
 						<RightBlock sendMessage={sendJsonMessage} />

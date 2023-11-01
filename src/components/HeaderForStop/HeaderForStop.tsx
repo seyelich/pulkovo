@@ -7,8 +7,7 @@ export const HeaderForStop = () => {
 	const ref = useRef<HTMLDivElement>(null);
 	const container = ref.current;
 
-	const isOverflown = (el: HTMLDivElement) =>
-		el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
+	const isOverflown = (el: HTMLDivElement) => el.scrollWidth > el.clientWidth;
 	const condition = container && isOverflown(container);
 
 	return (

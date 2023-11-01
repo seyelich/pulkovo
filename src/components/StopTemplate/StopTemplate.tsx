@@ -1,3 +1,4 @@
+import useLeftContext from '../../hooks/useLeftContext';
 import { TContextStop } from '../../utils/store';
 import styles from './StopTemplate.module.css';
 
@@ -8,6 +9,8 @@ type TStopTemplate = {
 };
 
 export const StopTemplate = ({ stop, isLast, isFirst }: TStopTemplate) => {
+	const { route } = useLeftContext();
+
 	return (
 		<li className={styles.stop}>
 			<div className={styles.timeContainer}>
@@ -32,9 +35,12 @@ export const StopTemplate = ({ stop, isLast, isFirst }: TStopTemplate) => {
 				/>
 			</svg>
 			<div
-				className={`${styles.nameContainer} ${
-					isFirst && styles.nameContainerFirst
-				}`}
+				className={styles.nameContainer}
+				style={
+					isFirst
+						? { backgroundColor: route.color, color: route.fontColor }
+						: undefined
+				}
 			>
 				<p className={styles.name}>{stop.nameRus}</p>
 				<p className={styles.nameEng}>{stop.nameEng}</p>

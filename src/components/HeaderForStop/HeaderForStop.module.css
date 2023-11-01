@@ -1,7 +1,8 @@
 .header {
 	padding: 10px 32px;
 	box-sizing: border-box;
-	height: 102px;
+	height: min-content;
+	white-space: nowrap;
 	overflow: hidden;
 }
 
@@ -9,18 +10,16 @@
 	font-size: 40px;
 	font-weight: 700;
 	line-height: 40px;
-	text-wrap: nowrap;
 }
 
 .titleEng {
 	font-size: 28px;
 	font-weight: 500;
 	line-height: 42px;
-	text-wrap: nowrap;
 }
 
 .runningLine {
-	animation: 5s linear infinite running line;
+	animation: 5s line linear infinite;
 }
 
 @media screen and (min-width: 2782px) {

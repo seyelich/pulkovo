@@ -1,6 +1,5 @@
 .stop {
 	display: flex;
-	height: 92px;
 	align-items: center;
 }
 
@@ -29,10 +28,6 @@
 	padding: 16px;
 }
 
-.nameContainerFirst {
-	background-color: #b6e5ff;
-}
-
 .name {
 	font-size: 32px;
 	font-weight: 500;
@@ -54,10 +49,6 @@
 }
 
 @media screen and (min-width: 2782px) {
-	.stop {
-		height: 130px;
-	}
-
 	.name {
 		font-size: 48px;
 		line-height: 48px;
