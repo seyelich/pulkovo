@@ -4,6 +4,7 @@
 	border-left: 2px solid rgba(51, 71, 67, 1);
 	width: 100%;
 	overflow: clip;
+	align-self: flex-start;
 }
 
 .titleContainer {
@@ -60,6 +61,27 @@
 
 .status {
 	width: 180px;
+}
+
+.tableBodyEnter {
+	transform: translateX(100%);
+}
+
+.tableBodyEnterActive {
+	transform: translateX(0);
+}
+
+.tableBodyExit {
+	transform: translateX(0);
+}
+
+.tableBodyExitActive {
+	transform: translateX(-100%);
+}
+
+.tableBodyEnterActive,
+.tableBodyExitActive {
+	transition: transform 1000ms;
 }
 
 @media screen and (max-width: 1920px) {

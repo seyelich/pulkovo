@@ -4,6 +4,7 @@ import styles from './RightBlock.module.css';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import useRightContext from '../../hooks/useRightContext';
+import { MediaContent } from '../MediaContent/MediaContent';
 
 export const RightBlock = ({
 	sendMessage,
@@ -41,26 +42,11 @@ export const RightBlock = ({
 				}}
 				nodeRef={nodeRef}
 				timeout={1000}
-				key={type && pulkovo.subtype && media.type}
+				key={type + media.src + pulkovo.subtype}
 			>
 				<div className={styles.rightBlock} ref={nodeRef}>
 					{type === 'media' ? (
-						<div className={styles.imageContainer}>
-							{media.type === 'img' ? (
-								<img
-									className={styles.image}
-									src={media.src}
-									alt={media.label}
-								/>
-							) : (
-								<video
-									className={styles.image}
-									autoPlay={true}
-									muted
-									src={media.src}
-								/>
-							)}
-						</div>
+						<MediaContent />
 					) : pulkovo.subtype === 'ARRIVAL' ||
 					  pulkovo.subtype === 'DEPARTURE' ? (
 						<FlightTable />

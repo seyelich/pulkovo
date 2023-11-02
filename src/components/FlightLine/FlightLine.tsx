@@ -1,4 +1,4 @@
-import { TFlight } from '../../utils/data';
+import { TFlight } from '../../types';
 import styles from './FlightLine.module.css';
 
 export const FlightLine = ({ flight }: { flight: TFlight }) => {
@@ -11,11 +11,11 @@ export const FlightLine = ({ flight }: { flight: TFlight }) => {
 		<tr className={styles.row}>
 			<td className={styles.textBold}>{flight.time}</td>
 			<td className={styles.textBold}>
-				<p className={styles.route}>{flight.number_roure}</p>
+				<p className={styles.route}>{flight.flightNumber}</p>
 			</td>
 			<td className={styles.direction}>{flight.direction}</td>
-			<td className={styles.company}>{flight.company}</td>
-			<td className={styles.textBold}>{flight.plane_type}</td>
+			<td className={styles.company}>{flight.airline}</td>
+			<td className={styles.textBold}>{flight.aircraftType}</td>
 			<td className={`${styles.status} ${setStatusStyle()}`}>
 				{flight.status}
 			</td>

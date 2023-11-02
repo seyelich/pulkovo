@@ -46,3 +46,9 @@
 .statusGreen {
 	background-color: #c9ffd5;
 }
+
+@media screen and (min-width: 2782px) {
+	.row td {
+		height: 97px;
+	}
+}

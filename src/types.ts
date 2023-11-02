@@ -58,8 +58,8 @@ export type TFlight = {
 	direction: string;
 	flightNumber: string;
 	status: string;
-	company: string; // нет в пакете
-	planeType: string; // нет в пакете
+	airline: string;
+	aircraftType: string;
 	counters?: string;
 };
 
