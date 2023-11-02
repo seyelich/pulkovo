@@ -30,7 +30,7 @@
 	border-left: solid 2px #d9d9d9;
 	border-image: linear-gradient(
 		180deg,
-		#d9d9d9 calc(100% - 72px),
+		#d9d9d9 calc(100% - var(--gap) * 3),
 		#ffffff 100%
 	);
 	border-image-slice: 1;
@@ -41,7 +41,7 @@
 }
 
 .circleWithLineFinal::after {
-	height: calc(100% - 72px);
+	height: calc(100% - var(--gap) * 4);
 	border-image: none;
 	bottom: 50%;
 }

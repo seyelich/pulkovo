@@ -1,6 +1,6 @@
 import { Footer } from '../Footer/Footer';
 import { HeaderForStop } from '../HeaderForStop/HeaderForStop';
-import { HeaderForRoute } from '../HeaderFroRoute/HeaderForRoute';
+import { HeaderForRoute } from '../HeaderForRoute/HeaderForRoute';
 import { Routes } from '../Routes/Routes';
 import styles from './LeftBlock.module.css';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
