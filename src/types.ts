@@ -44,9 +44,13 @@ export type TStopStart = {
 };
 
 export type TMedia = {
-	src: string;
+	src?: string;
 	label: string;
-	length: number;
+	length?: number;
+	header?: string;
+	text?: string;
+	url?: string;
+	format?: string;
 };
 
 export type TTemp = {

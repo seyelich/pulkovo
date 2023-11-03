@@ -88,7 +88,8 @@ function App() {
 		const { index } = lastJsonMessage as TStopStart;
 		const { speed } = lastJsonMessage as TSpeed;
 		const { temperature } = lastJsonMessage as TTemp;
-		const { src, label, length } = lastJsonMessage as TMedia;
+		const { src, label, length, header, text, url, format } =
+			lastJsonMessage as TMedia;
 
 		switch (lastJsonMessage.type) {
 			case 'ROUTE':
@@ -148,6 +149,34 @@ function App() {
 					label,
 					length,
 					type: 'video',
+				});
+				break;
+			case 'PLAY_EMERGENCY':
+				setType('media');
+				setMedia({
+					header: header,
+					text,
+					label,
+					length,
+					type: 'emergency',
+				});
+				break;
+			case 'PLAY_STREAM':
+				setType('media');
+				setMedia({
+					format,
+					url,
+					label,
+					length,
+					type: 'stream',
+				});
+				break;
+			case 'PLAY_TICKER':
+				setType('media');
+				setMedia({
+					text,
+					label,
+					type: 'ticker',
 				});
 				break;
 			case 'PULKOVO':
